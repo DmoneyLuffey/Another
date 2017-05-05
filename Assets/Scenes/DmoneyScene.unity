@@ -177,6 +177,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
+  healthStart: 0
+  coolDown: 5
   healthDepletion: 1
   isAttacked: 0
   isHit: 0
