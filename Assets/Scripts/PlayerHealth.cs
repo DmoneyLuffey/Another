@@ -8,7 +8,8 @@ public class PlayerHealth : MonoBehaviour
     public float currentHealth;
     private float health = 10;
     private Texture heartTexture;
-    private float healthStart = 0f;
+    public float healthStart = 0f;
+    public float coolDown = 2f;
     public float healthDepletion = 1;
 
     public bool isAttacked = false;
@@ -48,10 +49,7 @@ public class PlayerHealth : MonoBehaviour
         {
             isAttacked = true;
         }
-        else if(!isHit)
-        {
-            isAttacked = false;
-        }
+        
         if(Input.GetKeyDown(KeyCode.Space))
         {
             isHit = true;
@@ -60,6 +58,19 @@ public class PlayerHealth : MonoBehaviour
         else if(Input.GetKeyUp(KeyCode.Space))
         {
             isHit = false;
+        }
+
+        if(isAttacked && !isHit)
+        {
+            healthStart += Time.deltaTime;
+            if (healthStart < coolDown + Time.deltaTime)
+            {
+                if(healthStart >= coolDown && !isHit)
+                {
+                    healthStart = 0;
+                    isAttacked = false;
+                }
+            }
         }
     }
 }
