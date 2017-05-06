@@ -27,7 +27,7 @@ public class PlayerHealth : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        Damage();
+        Damage(0);
     }
 
     void OnGUI()
@@ -43,24 +43,15 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void Damage()
+    public void Damage(float amount)
     {
         if(isHit)
         {
+            currentHealth -= amount;
             isAttacked = true;
         }
-        
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            isHit = true;
-            currentHealth -= healthDepletion;
-        }
-        else if(Input.GetKeyUp(KeyCode.Space))
-        {
-            isHit = false;
-        }
 
-        if(isAttacked && !isHit)
+        if (isAttacked && !isHit)
         {
             healthStart += Time.deltaTime;
             if (healthStart < coolDown + Time.deltaTime)

@@ -11,14 +11,18 @@ public class Enemy : MonoBehaviour
     public float maxDist = 2;
     public float distCheck = 10.0f;
     public float moveSpeed = 5.0f;
+    private float damageStart = 0f;
+    public float damageCoolDown = 2.0f;
+    public float playerDamage = 1.0f;
+
+    public bool canAttack = false;
+    public bool isAttacking = true;
+    public bool isNear = false;
 
     // Use this for initialization
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
-        //crateLayer = LayerMask.NameToLayer("Base");
-        //playerHealth = GetComponent<PlayerHealth>();
-
     }
 
     // Update is called once per frame
@@ -33,26 +37,66 @@ public class Enemy : MonoBehaviour
     }
     private void LookAt()
     {
-        // Rotate to look at player.
         if(dist <= maxDist)
         {
             Quaternion rotation = Quaternion.LookRotation(toonTrans.position - transform.position);
-
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
         }
-        
-        //transform.LookAt(Target); alternate way to track player replaces both lines above.
     }
     private void PlayerSearch()
     {
         Vector3 dirToToon = (toonTrans.transform.position - this.transform.position).normalized;
         Ray ray = new Ray(this.transform.position, dirToToon);
-        if (dist <= maxDist)
+        if (dist < maxDist)
         {
+            isNear = true;
             Vector3 movementDir = this.transform.forward;
             movementDir.Normalize();
             transform.LookAt(toonTrans);
             this.rb.MovePosition(this.transform.position + movementDir * (moveSpeed * Time.deltaTime));
+        }
+        else
+        {
+            isNear = false;
+        }
+        if (dist <= 1.5)
+        {
+            canAttack = true;
+            if (canAttack)
+            {
+                isAttacking = true;
+                Debug.Log("Hey, I'm hitting you.");
+                DamagePlayer(playerDamage);
+            }
+        }
+        if (dist > 1.5 && isNear)
+        {
+            canAttack = false;
+            if(!canAttack)
+            {
+                isAttacking = false;
+                if(!isAttacking)
+                {
+                    playerHealth.isHit = false;
+                }
+            }
+        }
+    }
+
+    public void DamagePlayer(float playerDamage)
+    {
+        if(canAttack && isAttacking)
+        {
+            if (Time.time > damageStart + damageCoolDown)
+            {
+                if (isAttacking)
+                {
+                    playerHealth.isHit = true;
+                    damageStart = Time.time;
+                    playerHealth.Damage(playerDamage);
+                    //anim.SetTrigger("Attack");
+                }
+            }
         }
     }
 }
