@@ -49,7 +49,8 @@ public class PlayerController : MonoBehaviour {
 		}
 		public Running running = new Running(); //variables that determine whether or not the player uses a running button to run
 		[System.Serializable]
-		public class Crouching {
+		public class Crouching
+        {
 			public bool allowCrouching = true; //determines whether or not the player is allowed to crouch
 			public float crouchMovementSpeedMultiple = 0.4f; //player's movement speed while crouching (multiplied by move speed)
 			public float crouchColliderHeightMultiple = 0.7f; //what to multiply the player's collider height while crouching by
@@ -65,7 +66,8 @@ public class PlayerController : MonoBehaviour {
 		public bool hardStickToGround = false; //by using a raycast, this option sets the position of the player to the position of the ground under him
 		
 		[System.Serializable]
-		public class SideScrolling {
+		public class SideScrolling
+        {
 			public float movementSpeedIfAxisLocked = 6.0f; //the move speed of the player if one of the axis are locked
 			public bool lockMovementOnZAxis = false; //locks the movement of the player on the z-axis
 			public float zValue = 0; //the permanent z-value of the player if his movement on the z-axis is locked
@@ -77,7 +79,8 @@ public class PlayerController : MonoBehaviour {
 		public SideScrolling sideScrolling = new SideScrolling(); //variables that determine whether or not the player uses 2.5D side-scrolling
 		
 		[System.Serializable]
-		public class FirstPerson {
+		public class FirstPerson
+        {
 			public bool useCameraControllerSettingsIfPossible = true; //if the player camera has the script: "CameraController.cs" attached to it, the player will use the same first person settings as the camera
 			public bool alwaysUseFirstPerson = false; //allows the player to always stay in first person mode
 			public bool switchToFirstPersonIfInputButtonPressed = false; //switches to first person mode and back when the "firstPersonInputButton" is pressed
@@ -92,7 +95,8 @@ public class PlayerController : MonoBehaviour {
 	
 	//Jumping
 	[System.Serializable]
-	public class Jumping {
+	public class Jumping
+    {
 		public float [] numberAndHeightOfJumps = {6, 8, 12}; //the number of jumps the player can perform and the height of the jumps (the elements)
 		public float timeLimitBetweenJumps = 1; //the amount of time you have between each jump to continue the jump combo
 		public bool allowJumpWhenSlidingFacingUphill = false; //determines whether or not you are allowed to jump when you are facing uphill and sliding down a slope
@@ -105,12 +109,16 @@ public class PlayerController : MonoBehaviour {
 		public float doubleJumpHeight = 6; //height of double jump
 		public GameObject doubleJumpEffect; //optional effect to appear when performing a double jump
 		public float maxFallingSpeed = 90; //the maximum speed you can fall
+        public bool canHover = false; //Pedro Starting hover
+        public float hoverSpeed = .5f; // pedro hover speed
+        public bool Hover = false; //Pedro Starting hover
 	}
 	
 	//Wall Jumping
 	[System.Serializable]
-	public class WallJumping {
-		public bool allowWallJumping = true; //determines whether or not you are allowed to wall jump
+	public class WallJumping
+    {
+		public bool allowWallJumping = false; //determines whether or not you are allowed to wall jump
 		public float minimumWallAngle = 80; //the minimum angle a wall can be to wall jump off of it
 		public float wallJumpDistance = 6; //distance of wall jump
 		public float wallJumpHeight = 10; //height of wall jump
@@ -550,37 +558,50 @@ public class PlayerController : MonoBehaviour {
 	private RaycastHit backHit = new RaycastHit(); //information on the hit point of a raycast behind the player
 	private Animator animator; //the "Animator" component of the script holder
 	public LayerMask collisionLayers = -1; //the layers that the detectors (raycasts/linecasts) will collide with
-	
-	// Use this for initialization
-	void Start () {
+    private bool canHover;
+    public Vector3 jump2;
+    public float jumpForce = 50.0f;
+    Rigidbody rb;
+    
+
+    // Use this for initialization
+    void Start ()
+    {
 		StartUp();
 		waitingBetweenAttacksTimer = attacking.waitingTimeBetweenAttacks;
 		//starting off in first person mode
 		if (movement.firstPerson.switchToFirstPersonIfInputButtonPressed && movement.firstPerson.startOffInFirstPersonModeForSwitching
-		&& (!playerCamera.GetComponent<CameraController>() || playerCamera.GetComponent<CameraController>() && !playerCamera.GetComponent<CameraController>().mouseOrbit.startOffMouseOrbitingForSwitching)){
+		&& (!playerCamera.GetComponent<CameraController>() || playerCamera.GetComponent<CameraController>() && !playerCamera.GetComponent<CameraController>().mouseOrbit.startOffMouseOrbitingForSwitching))
+        {
 			firstPersonStart = true;
 			firstPersonButtonPressed = true;
 		}
+        jump2 = new Vector3(0.0f, 2.0f, 0.0f);
 	}
 	
-	void StartUp () {
+	void StartUp ()
+    {
 		//resetting script to make sure that everything initializes
 		enabled = false;
 		enabled = true;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
 		//if the player is currently on a wall, set jumpedOffWallForWallJump to false
-		if (currentlyOnWall){
+		if (currentlyOnWall)
+        {
 			jumpedOffWallForWallJump = false;
 		}
 		//if the player has jumped off of a wall, set jumpedOffWallForWallJump to true
-		else if (inMidAirFromWallJump && noCollisionTimer >= 5){
+		else if (inMidAirFromWallJump && noCollisionTimer >= 5)
+        {
 			jumpedOffWallForWallJump = true;
 		}
-		if (jumpedOffWallForWallJump && noCollisionTimer < 5 && inMidAirFromWallJump){
+		if (jumpedOffWallForWallJump && noCollisionTimer < 5 && inMidAirFromWallJump)
+        {
 			transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
 			inMidAirFromWallJump = false;
 		}
@@ -595,11 +616,13 @@ public class PlayerController : MonoBehaviour {
 		forwardSpeed2 = movement.forwardSpeed;
 		sideSpeed2 = movement.sideSpeed;
 		backSpeed2 = movement.backSpeed;
-		if (!inMidAirFromWallJump){
+		if (!inMidAirFromWallJump)
+        {
 			midAirMovementSpeedMultiple2 = movement.midAirMovementSpeedMultiple;
 		}
 		//wall jumps have their own mid-air speed and dampening, so during a wall jump, we set midAirMovementSpeedMultiple2 to 0 to avoid affecting it
-		else {
+		else
+        {
 			midAirMovementSpeedMultiple2 = 0;
 		}
 		acceleration2 = movement.acceleration;
@@ -688,10 +711,12 @@ public class PlayerController : MonoBehaviour {
 		else if (GetComponent<Rigidbody>()){
 			//checking to see if player's head hit the ceiling
 			if (yPos == transform.position.y && GetComponent<Rigidbody>().velocity.y + 0.1f > yVel && !jumpPerformed && noCollisionTimer == 0 && !sliding && moveDirection.y > 0 && !grounded.currentlyGrounded){
-				if (collisionSlopeAngle < slopeLimit || collisionSlopeAngle > 91){
+				if (collisionSlopeAngle < slopeLimit || collisionSlopeAngle > 91)
+                {
 					headHit = true;
 				}
-				else {
+				else
+                {
 					headHit = false;
 				}
 			}
@@ -703,7 +728,8 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		//if user set jumps, totalJumpNumber equals the number set
-		if (jumpsToPerform.Length > 0){
+		if (jumpsToPerform.Length > 0)
+        {
 			totalJumpNumber = jumpsToPerform.Length;
 		}
 		//if user did not set jumps, totalJumpNumber equals 0
@@ -712,69 +738,88 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		//if the "Jump" button was pressed, jumpPressed equals true
-		if (Input.GetButtonDown("Jump")){
+		if (Input.GetButtonDown("Jump"))
+        {
 			jumpPressedTimer = 0.0f;
 			jumpPressed = true;
 		}
-		else{
+		else
+        {
 			jumpPressedTimer += 0.02f;
 		}
 		
 		//wait 0.2 seconds for jumpPressed to become false
 		//this allows the player to press the "Jump" button slightly early and still jump once they have landed
-		if (jumpPressedTimer > 0.2f){
+		if (jumpPressedTimer > 0.2f)
+        {
 			jumpPressed = false;
 		}
 
 		//jump
-		if (grounded.currentlyGrounded){
-			if (jumpPressed && jumpPossible && !jumpPerformed && totalJumpNumber > 0 && !onWallLastUpdate && jumpEnabled && (raycastSlopeAngle > slopeLimit && (uphill && jumping.allowJumpWhenSlidingFacingUphill || !uphill && jumping.allowJumpWhenSlidingFacingDownhill || inBetweenSlidableSurfaces) || raycastSlopeAngle <= slopeLimit) && canCrouchToAction){
-				Jump();
-			}
+		if (grounded.currentlyGrounded)
+        {
+            if (jumpPressed && jumpPossible && !jumpPerformed && totalJumpNumber > 0 && !onWallLastUpdate && jumpEnabled && (raycastSlopeAngle > slopeLimit && (uphill && jumping.allowJumpWhenSlidingFacingUphill || !uphill && jumping.allowJumpWhenSlidingFacingDownhill || inBetweenSlidableSurfaces) || raycastSlopeAngle <= slopeLimit) && canCrouchToAction)
+            {
+                Jump();
+            }
 			doubleJumpPossible = true;
 		}
 		
-		//double jump
-		if (Input.GetButtonDown("Jump") && doubleJumpPossible && !grounded.currentlyGrounded && allowDoubleJump2 && jumpEnabled && (doubleJumpPerformableIfInMidAirInGeneral2 || !doubleJumpPerformableIfInMidAirInGeneral2 && inMidAirFromJump) && (jumping.doubleJumpPerformableOutOfWallJump || !inMidAirFromWallJump) && !onWallLastUpdate && canCrouchToAction){
-			if (!Physics.Raycast(pos, Vector3.down, out hit, 0.5f, collisionLayers) && moveDirection.y < 0 || !grounded.currentlyGrounded && moveDirection.y >= 0){
+		//double jump   
+		if (Input.GetButtonDown("Jump") && doubleJumpPossible && !grounded.currentlyGrounded && allowDoubleJump2 && jumpEnabled && (doubleJumpPerformableIfInMidAirInGeneral2 || !doubleJumpPerformableIfInMidAirInGeneral2 && inMidAirFromJump) && (jumping.doubleJumpPerformableOutOfWallJump || !inMidAirFromWallJump) && !onWallLastUpdate && canCrouchToAction)
+        {
+			if (!Physics.Raycast(pos, Vector3.down, out hit, 0.5f, collisionLayers) && moveDirection.y < 0 || !grounded.currentlyGrounded && moveDirection.y >= 0)
+            {
 				DoubleJump();
-				jumpPressed = false;
+                jumpPressed = false;
 				doubleJumpPossible = false;
 			}
-		}
-		
-		//enabling jumping while the script is enabled
-		jumpEnabled = true;
+          
+        }
+       
+        
+
+        //enabling jumping while the script is enabled
+        jumpEnabled = true;
 		
 		//checking to see if player was on the wall in the last update
-		if (currentlyOnWall || currentlyClimbingWall || turnBack || back2){
+		if (currentlyOnWall || currentlyClimbingWall || turnBack || back2)
+        {
 			onWallLastUpdate = true;
 		}
-		else {
+		else
+        {
 			onWallLastUpdate = false;
 		}
 		
 		//counting how long it has been since last jump was first performed
-		if (jumpPerformed){
+		if (jumpPerformed)
+        {
 			jumpPerformedTime += 0.02f;
 		}
-		else {
+		else
+        {
 			jumpPerformedTime = 0;
 		}
 		
 		//if in mid air as a result of jumping
-		if (inMidAirFromJump){
+		if (inMidAirFromJump)
+        {
 			
-			if (grounded.currentlyGrounded){
+			if (grounded.currentlyGrounded)
+            {
 				
-				if (!jumpPerformed){
+				if (!jumpPerformed)
+                {
 					//creating the optional dust effect after landing a jump
-					if (jumpLandingEffect2 != null){
+					if (jumpLandingEffect2 != null)
+                    {
 						Instantiate(jumpLandingEffect2, transform.position + new Vector3(0, 0.05f, 0), jumpLandingEffect2.transform.rotation);
 					}
 				
 					//once player has landed jump, stop jumping animation and return to movement
-					if (animator != null && animator.runtimeAnimatorController != null){
+					if (animator != null && animator.runtimeAnimatorController != null)
+                    {
 						animator.CrossFade("Movement", 0.2f);
 					}
 				
@@ -782,9 +827,11 @@ public class PlayerController : MonoBehaviour {
 					inMidAirFromJump = false;
 				}
 				
-				if (jumpTimer == 0 && jumpPerformedTime > 0.1f){
+				if (jumpTimer == 0 && jumpPerformedTime > 0.1f)
+                {
 					//creating the optional dust effect after landing a jump
-					if (jumpLandingEffect2 != null){
+					if (jumpLandingEffect2 != null)
+                    {
 						Instantiate(jumpLandingEffect2, transform.position + new Vector3(0, 0.05f, 0), jumpLandingEffect2.transform.rotation);
 					}
 					jumpPerformed = false;
@@ -813,16 +860,20 @@ public class PlayerController : MonoBehaviour {
 
 		
 		//after jump is performed and jumpPerformed is true, set jumpPerformed to false
-		if (jumpPerformed){
-			if (!grounded.currentlyGrounded || headHit){
+		if (jumpPerformed)
+        {
+			if (!grounded.currentlyGrounded || headHit)
+            {
 				jumpPerformed = false;
 			}
 		}
 		
 		//crouching
-		if (movement.crouching.allowCrouching){
+		if (movement.crouching.allowCrouching)
+        {
 			//when the crouching button is pressed, determine if the player can crouch (or if he will be able to crouch after landing on the ground)
-			if (!canCrouch && (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Joystick1Button8)) && finishedCrouching){
+			if (!canCrouch && (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Joystick1Button8)) && finishedCrouching)
+            {
 				finishedCrouching = false;
 				crouchCancelsAttack = true;
 				canCrouch = true;
@@ -835,9 +886,10 @@ public class PlayerController : MonoBehaviour {
 				canCrouch = false;
 			}
 			//if the player is grounded and canCrouch is true, crouch
-			if (grounded.currentlyGrounded && canCrouch && !crouching){
+			if (grounded.currentlyGrounded && canCrouch && !crouching)
+            {
 				crouchCancelsAttack = true;
-				crouching = true;
+                crouching = true;
 			}
 			//if the player performs a jump, wall climb, etc.: uncrouch
 			if (crouching && (currentlyClimbingWall || currentlyOnWall) && !Physics.Linecast(new Vector3(transform.position.x, feetPositionNew, transform.position.z), new Vector3(transform.position.x, headPositionNew, transform.position.z), out hit, collisionLayers)){
@@ -845,8 +897,16 @@ public class PlayerController : MonoBehaviour {
 				canCrouch = false;
 				crouching = false;
 			}
+            if (grounded.currentlyGrounded && crouching)
+            {
+                if(Input.GetKeyDown(KeyCode.C))
+                {
+                    GetComponent<CharacterController>().Move((moveDirection + new Vector3(0, 4.0f, 0)));
+                }
+            }
 			
-		}
+
+        }
 		else {
 			canCrouch = false;
 			crouching = false;
@@ -929,7 +989,8 @@ public class PlayerController : MonoBehaviour {
 		PerformWallJump();
 		
 		//wall and ladder climbing
-		if (climbing.Length > 0){
+		if (climbing.Length > 0)
+        {
 			CheckIfPlayerCanClimb();
 			
 			ClimbingWall();
@@ -982,7 +1043,8 @@ public class PlayerController : MonoBehaviour {
 			canCrouchToAction = false;
 		}
 		//if player has a character controller collider
-		if (GetComponent<CharacterController>() && GetComponent<CharacterController>().enabled){
+		if (GetComponent<CharacterController>() && GetComponent<CharacterController>().enabled)
+        {
 			if (crouching){
 				if (!colliderAdjusted){
 					Vector3 colliderCenter = GetComponent<CharacterController>().center;
@@ -1101,13 +1163,17 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 	
-	void GettingClimbingValues () {
+	void GettingClimbingValues ()
+    {
 		
-		if (!wallIsClimbable && !currentlyClimbingWall && !turnBack && !back2 && !pullingUp){
-			if (i == climbing.Length){
+		if (!wallIsClimbable && !currentlyClimbingWall && !turnBack && !back2 && !pullingUp
+            ){
+			if (i == climbing.Length)
+            {
 				i = 0;
 			}
-			if (!firstTest && !secondTest && !thirdTest && !fourthTest && !fifthTest){
+			if (!firstTest && !secondTest && !thirdTest && !fourthTest && !fifthTest
+                ){
 				tagNum = i;
 			}
 		}
@@ -3007,29 +3073,36 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 	
-	void ApplyGravity () {
+	void ApplyGravity ()
+    {
 		
 		//apply gravity
-		if (!jumpPressed || !grounded.currentlyGrounded){
-			if (!currentlyOnWall && !currentlyClimbingWall && !turnBack && !back2){
+		if (!jumpPressed || !grounded.currentlyGrounded)
+        {
+			if (!currentlyOnWall && !currentlyClimbingWall && !turnBack && !back2)
+            {
 				moveDirection.y -= gravity * Time.deltaTime;
 			}
 		}
 		
 		//telling the player to not fall faster than the maximum falling speed
 		if (GetComponent<CharacterController>() && GetComponent<CharacterController>().enabled){
-			if (moveDirection.y <= -maxFallingSpeed2){
+			if (moveDirection.y <= -maxFallingSpeed2)
+            {
 				moveDirection.y = -maxFallingSpeed2;
 			}
 		}
-		else if (GetComponent<Rigidbody>()) {
-			if (GetComponent<Rigidbody>().velocity.y <= -maxFallingSpeed2){
+		else if (GetComponent<Rigidbody>())
+        {
+			if (GetComponent<Rigidbody>().velocity.y <= -maxFallingSpeed2)
+            {
 				moveDirection.y = -maxFallingSpeed2;
 			}
 		}
 
 		//if head is blocked/hits the ceiling, stop going up
-		if (headHit){
+		if (headHit)
+        {
 			moveDirection.y = 0;
 		}
 		
@@ -3037,13 +3110,17 @@ public class PlayerController : MonoBehaviour {
 	
 	void MovePlayer () {
 		
-		if (!currentlyOnWall && !currentlyClimbingWall){
+		if (!currentlyOnWall && !currentlyClimbingWall)
+        {
 			//if player is using a CharacterController
-			if (GetComponent<CharacterController>() && GetComponent<CharacterController>().enabled){
+			if (GetComponent<CharacterController>() && GetComponent<CharacterController>().enabled)
+            {
 				
 				//applying a downward force to keep the player falling instead of slowly floating to the ground
+
 				if (grounded.currentlyGrounded && moveDirection.y >= 0 && (noCollisionTimer > 5 || uphill) && !sliding && !jumpPerformed){
-					if (Physics.Raycast(pos, Vector3.down, out hit, 1f, collisionLayers) && ((Mathf.Acos(Mathf.Clamp(hit.normal.y, -1f, 1f))) * 57.2958f) <= slopeLimit){
+					if (Physics.Raycast(pos, Vector3.down, out hit, 1f, collisionLayers) && ((Mathf.Acos(Mathf.Clamp(hit.normal.y, -1f, 1f))) * 57.2958f) <= slopeLimit)
+                    {
 						moveDirection.y -= -transform.position.y + hit.normal.y;
 					}
 				}
@@ -3067,7 +3144,8 @@ public class PlayerController : MonoBehaviour {
 					
 					//moving player, and avoiding bouncing if on a sloped surface
 					if ((grounded.currentlyGrounded && !inMidAirFromJump && !inMidAirFromWallJump || raycastSlopeAngle > slopeLimit && collisionSlopeAngle < 89 && !jumpPerformed && slidePossible || inBetweenSlidableSurfaces)
-					&& (moveDirection.y > transform.position.y)){
+					&& (moveDirection.y > transform.position.y))
+                    {
 						GetComponent<CharacterController>().Move((moveDirection + new Vector3(0, transform.position.y, 0)) * Time.deltaTime);
 					}
 					//moving player
@@ -3214,14 +3292,17 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 	
-	void LateUpdate () {
+	void LateUpdate ()
+    {
 		
 		//checking to see if the first person button has been pressed
 		if (Input.GetButtonDown(movement.firstPerson.firstPersonInputButton) && movement.firstPerson.switchToFirstPersonIfInputButtonPressed){
-			if (firstPersonStart){
+			if (firstPersonStart)
+            {
 				firstPersonStart = false;
 			}
-			else {
+			else
+            {
 				firstPersonStart = true;
 			}
 		}
@@ -3239,10 +3320,12 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 	
-	void DrawClimbingDetectors () {
+	void DrawClimbingDetectors ()
+    {
 		
 		//showing climbing detectors
-		for (int i = 0; i < climbing.Length; i++) {
+		for (int i = 0; i < climbing.Length; i++)
+        {
 			
 			//setting the climbing variables that we will be using to draw
 			showClimbingDetectors3 = climbing[i].showClimbingDetectors;
@@ -3456,15 +3539,18 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 
-	void Jump () {
+	void Jump ()
+    {
 		canCrouch = false;
 		crouching = false;
 		jumpPerformed = true;
-		if (currentJumpNumber == totalJumpNumber || timeLimitBetweenJumps2 <= 0 || jumping.doNotIncreaseJumpNumberWhenSliding && sliding){
+		if (currentJumpNumber == totalJumpNumber || timeLimitBetweenJumps2 <= 0 || jumping.doNotIncreaseJumpNumberWhenSliding && sliding)
+        {
 			currentJumpNumber = 0;
 		}
 		currentJumpNumber++;
-		if (animator != null && animator.runtimeAnimatorController != null){
+		if (animator != null && animator.runtimeAnimatorController != null)
+        {
 			animator.CrossFade("Jump", 0f, -1, 0f);
 		}
 		jumpTimer = 0.0f;
@@ -3474,35 +3560,72 @@ public class PlayerController : MonoBehaviour {
 		return;
 		
 	}
+    void CrouchJump()
+    {
+        canCrouch = false;
+        crouching = true;
+        jumpPerformed = true;
+        if (currentJumpNumber == totalJumpNumber || timeLimitBetweenJumps2 <= 0 || jumping.doNotIncreaseJumpNumberWhenSliding && sliding)
+        {
+            currentJumpNumber = 0;
+        }
+        currentJumpNumber++;
+        if (animator != null && animator.runtimeAnimatorController != null)
+        {
+            animator.CrossFade("Jump", 0f, -1, 0f);
+        }
+        jumpTimer = 0.0f;
+        moveDirection.y = jumpsToPerform[currentJumpNumber - 1];
+        inMidAirFromJump = true;
+        jumpPressed = false;
+        return;
+    }
+
+    void Hover()
+    {
+        if (inMidAirFromJump == true)
+        {
+            maxFallingSpeed2 = 0.2f;
+        }
+    }
 	
-	void DoubleJump () {
+	void DoubleJump ()
+    {
 		inMidAirFromJump = true;
-		if (inMidAirFromWallJump){
+		if (inMidAirFromWallJump)
+        {
 			transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
 			inMidAirFromWallJump = false;
 		}
-		if (moveDirection.y > 0){
+		if (moveDirection.y > 0)
+        {
 			moveDirection.y += doubleJumpHeight2;
-			if (GetComponent<CharacterController>() && GetComponent<CharacterController>().enabled){
+			if (GetComponent<CharacterController>() && GetComponent<CharacterController>().enabled)
+            {
 				GetComponent<CharacterController>().Move(moveDirection * Time.deltaTime);
 			}
-			if (GetComponent<Rigidbody>()){
+			if (GetComponent<Rigidbody>())
+            {
 				GetComponent<Rigidbody>().velocity = moveDirection;
 			}
 		}
 		else {
 			moveDirection.y = doubleJumpHeight2;
-			if (GetComponent<CharacterController>() && GetComponent<CharacterController>().enabled){
+			if (GetComponent<CharacterController>() && GetComponent<CharacterController>().enabled)
+            {
 				GetComponent<CharacterController>().Move(moveDirection * Time.deltaTime);
 			}
-			if (GetComponent<Rigidbody>()){
+			if (GetComponent<Rigidbody>())
+            {
 				GetComponent<Rigidbody>().velocity = moveDirection;
 			}
 		}
-		if (animator != null && animator.runtimeAnimatorController != null){
+		if (animator != null && animator.runtimeAnimatorController != null)
+        {
 			animator.CrossFade("DoubleJump", 0f, -1, 0f);
 		}
-		if (doubleJumpEffect2 != null){
+		if (doubleJumpEffect2 != null)
+        {
 			Instantiate(doubleJumpEffect2, transform.position + new Vector3(0, 0.2f, 0), doubleJumpEffect2.transform.rotation);
 		}
 		return;
@@ -3516,8 +3639,10 @@ public class PlayerController : MonoBehaviour {
 		return;
 	}
 	
-	void Attack () {
-		if (!crouching){
+	void Attack ()
+    {
+		if (!crouching)
+        {
 			if (currentAttackNumber == totalAttackNumber || timeLimitBetweenAttacks2 <= 0){
 				currentAttackNumber = 0;
 			}
