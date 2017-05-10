@@ -773,11 +773,20 @@ public class PlayerController : MonoBehaviour {
 				DoubleJump();
                 jumpPressed = false;
 				doubleJumpPossible = false;
+               
 			}
           
         }
-       
-        
+        // Gliding (Pedro)
+        if (Input.GetKeyDown(KeyCode.V) && !grounded.currentlyGrounded && jumpEnabled && inMidAirFromJump)
+        {
+            gravity = 2.0f;
+        }
+        if (grounded.currentlyGrounded)
+        {
+            gravity = 20.0f;
+        }
+
 
         //enabling jumping while the script is enabled
         jumpEnabled = true;
