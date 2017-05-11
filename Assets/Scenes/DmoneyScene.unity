@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  coolDown: 2
+  coolDown: 3
   healthDepletion: 1
   isAttacked: 0
   isHit: 0
@@ -173,7 +173,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 177355766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.56, y: 1.5, z: -3.6}
+  m_LocalPosition: {x: -3.56, y: 1.5, z: -5.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -289,6 +289,10 @@ Prefab:
     - target: {fileID: 189260, guid: 18694017459bc9342a2d7f5173fc6bec, type: 2}
       propertyPath: m_Name
       value: Enemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11446188, guid: 18694017459bc9342a2d7f5173fc6bec, type: 2}
+      propertyPath: playerDamage
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18694017459bc9342a2d7f5173fc6bec, type: 2}
