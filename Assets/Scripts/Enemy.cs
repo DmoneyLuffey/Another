@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     public Transform toonTrans;
     private Rigidbody rb;
 
-    public float dist;
+    private float dist;
     public float maxDist = 2;
     public float distCheck = 10.0f;
     public float moveSpeed = 5.0f;
@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
 
     public bool canAttack = false;
     public bool isAttacking = true;
-    public bool isNear = false;
+    private bool isNear = false;
 
     // Use this for initialization
     void Start()
