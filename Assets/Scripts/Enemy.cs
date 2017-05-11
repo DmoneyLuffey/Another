@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
     public Transform toonTrans;
     private Rigidbody rb;
 
+    public float currentHealth;
+    private float health = 10;
     private float dist;
     public float maxDist = 2;
     public float distCheck = 10.0f;
@@ -22,6 +24,7 @@ public class Enemy : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        currentHealth = health;
         rb = this.GetComponent<Rigidbody>();
     }
 
