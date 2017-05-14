@@ -19,7 +19,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 	
 	public Transform playerCamera; //the camera set to follow the player
 	public float gravity = 20.00f; //the amount of downward force, or "gravity," that is constantly being applied to the player
@@ -98,7 +99,7 @@ public class PlayerController : MonoBehaviour {
 	public class Jumping
     {
 		public float [] numberAndHeightOfJumps = {6, 8, 12}; //the number of jumps the player can perform and the height of the jumps (the elements)
-		public float timeLimitBetweenJumps = 1; //the amount of time you have between each jump to continue the jump combo
+		public float timeLimitBetweenJumps = 0.000000000001f; //the amount of time you have between each jump to continue the jump combo
 		public bool allowJumpWhenSlidingFacingUphill = false; //determines whether or not you are allowed to jump when you are facing uphill and sliding down a slope
 		public bool allowJumpWhenSlidingFacingDownhill = true; //determines whether or not you are allowed to jump when you are facing downhill and sliding down a slope
 		public bool doNotIncreaseJumpNumberWhenSliding = true; //only allows the player to perform their first jump when sliding down a slope
@@ -161,7 +162,8 @@ public class PlayerController : MonoBehaviour {
 	
 	//Climbing
 	[System.Serializable]
-	public class Climbing {
+	public class Climbing
+    {
 		
 		public string climbableTag = "Ladder"; //the tag of a climbable object
 		public bool climbVertically = true; //determines whether or not the player is allowed to climb vertically
@@ -661,7 +663,8 @@ public class PlayerController : MonoBehaviour {
 		
 		
 		//showing wall jump detectors
-		if (wallJumping.showWallJumpDetectors){
+		if (wallJumping.showWallJumpDetectors)
+        {
 			//middle
 			Debug.DrawLine(transform.position + spaceOnWallNeededToWallJumpUpAmount2, transform.position + spaceOnWallNeededToWallJumpUpAmount2 + (transform.forward*(spaceOnWallNeededToWallJumpLength2 + 1)), Color.yellow);
 			Debug.DrawLine(transform.position + spaceOnWallNeededToWallJumpUpAmount2 + (transform.up*(spaceOnWallNeededToWallJumpHeight2 + 1))*0.1875f, transform.position + spaceOnWallNeededToWallJumpUpAmount2 + (transform.forward*(spaceOnWallNeededToWallJumpLength2 + 1)) + (transform.up*(spaceOnWallNeededToWallJumpHeight2 + 1))*0.1875f, Color.yellow);
@@ -782,7 +785,7 @@ public class PlayerController : MonoBehaviour {
         {
             gravity = 2.0f;
         }
-        if (grounded.currentlyGrounded)
+        if (Input.GetKeyUp(KeyCode.V))
         {
             gravity = 20.0f;
         }
@@ -3496,7 +3499,8 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 	
-	void CheckIfInBetweenSlopes () {
+	void CheckIfInBetweenSlopes ()
+    {
 		
 		//checking to see if player is stuck between two slopes
 		
@@ -3652,19 +3656,22 @@ public class PlayerController : MonoBehaviour {
     {
 		if (!crouching)
         {
-			if (currentAttackNumber == totalAttackNumber || timeLimitBetweenAttacks2 <= 0){
+			if (currentAttackNumber == totalAttackNumber || timeLimitBetweenAttacks2 <= 0)
+            {
 				currentAttackNumber = 0;
 			}
 			currentAttackNumber++;
 		}
-		if (animator != null && animator.runtimeAnimatorController != null){
+		if (animator != null && animator.runtimeAnimatorController != null)
+        {
 			animator.CrossFade("Attack", 0f, -1, 0f);
 		}
 		attackTimer = 0.0f;
 		return;
 	}
 	
-	void PushOffWall () {
+	void PushOffWall ()
+    {
 		
 		//pushing off of wall after letting go
 		jumpedOffClimbableObjectTimer += 0.02f;
@@ -3681,7 +3688,8 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 	
-	void SnapToCenter () {
+	void SnapToCenter ()
+    {
 		
 		if (snapToCenterOfObject2 && (turnBack || back2)){
 			snappingToCenter = true;
@@ -3718,18 +3726,21 @@ public class PlayerController : MonoBehaviour {
 			}
 			
 		}
-		else {
+		else
+        {
 			snapTimer = 0;
 			snappingToCenter = false;
 		}
 		
 	}
 	
-	void TurnToGrabLadder () {
+	void TurnToGrabLadder ()
+    {
 		
 		//Climbing variables
 		i++;
-		if (i == climbing.Length){
+		if (i == climbing.Length)
+        {
 			i = 0;
 		}
 		if (!firstTest && !secondTest && !thirdTest && !fourthTest && !fifthTest){
@@ -3779,7 +3790,8 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		
-		if (!turnBack){
+		if (!turnBack)
+        {
 			//checking to see if either side of a ledge is blocked
 			if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0){
 				if (!wallIsClimbable && !Physics.Linecast(transform.position + transform.up*0.5f, transform.position + transform.forward/1.5f + transform.up*0.5f + spaceInFrontNeededToGrabBackOn2, out hit, collisionLayers) && !back2 && !currentlyClimbingWall){
@@ -3960,38 +3972,49 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		//turning around when you walk off a ledge
-		if (turnBack){
-			
-			if (animator != null && !animator.GetCurrentAnimatorStateInfo(0).IsName("Climbing")){
+		if (turnBack)
+        {
+			if (animator != null && !animator.GetCurrentAnimatorStateInfo(0).IsName("Climbing"))
+            {
 				animator.CrossFade("Climbing", 0f, -1, 0f);
 			}
 			
-			if (allowGrabbingOnAfterWalkingOffLedge2 && (turnBackMiddle || turnBackLeft || turnBackRight)){
-				if (!stayUpright2){
+			if (allowGrabbingOnAfterWalkingOffLedge2 && (turnBackMiddle || turnBackLeft || turnBackRight))
+            {
+				if (!stayUpright2)
+                {
 					if ((Vector3.Distance(transform.position, new Vector3(turnBackPoint.x, playerPosY, turnBackPoint.z)) > 0.3f && !snapToCenterOfObject2 || Vector3.Distance(transform.position, new Vector3(turnBackPoint.x, (playerPosY + 0.06f/5), turnBackPoint.z)) > 0.3f && snapToCenterOfObject2
-					|| Quaternion.Angle(transform.rotation, backRotation) > 0.1f) && (!snapToCenterOfObject2 && turnBackTimer < 0.5f || turnBackTimer < 0.2f)){
+					|| Quaternion.Angle(transform.rotation, backRotation) > 0.1f) && (!snapToCenterOfObject2 && turnBackTimer < 0.5f || turnBackTimer < 0.2f))
+                    {
 						turnBackTimer += 0.02f;
 						back2 = false;
 						currentlyClimbingWall = false;
 						//movement
-						if (!snapToCenterOfObject2){
-							if (GetComponent<CharacterController>() && GetComponent<CharacterController>().enabled){
+						if (!snapToCenterOfObject2)
+                        {
+							if (GetComponent<CharacterController>() && GetComponent<CharacterController>().enabled)
+                            {
 								transform.position = Vector3.Lerp(transform.position, new Vector3(turnBackPoint.x, playerPosY, turnBackPoint.z), 10 * Time.deltaTime);
 							}
-							else if (GetComponent<Rigidbody>()){
+							else if (GetComponent<Rigidbody>())
+                            {
 								transform.position = Vector3.Slerp(transform.position, new Vector3(turnBackPoint.x, playerPosY, turnBackPoint.z), 10 * Time.deltaTime);
 							}
 						}
-						else {
+						else
+                        {
 							transform.position = Vector3.Slerp(transform.position, new Vector3(turnBackPoint.x, (playerPosY + 0.06f/5), turnBackPoint.z), 10 * Time.deltaTime);
 							
 						}
 						//moving over if player is past side
-						if (!snapToCenterOfObject2 && Quaternion.Angle(transform.rotation, backRotation) < 45){
-							if (reachedLeftPoint){
+						if (!snapToCenterOfObject2 && Quaternion.Angle(transform.rotation, backRotation) < 45)
+                        {
+							if (reachedLeftPoint)
+                            {
 								turnBackPoint += transform.right/30;
 							}
-							if (reachedRightPoint){
+							if (reachedRightPoint)
+                            {
 								turnBackPoint -= transform.right/30;
 							}
 						}
@@ -4076,7 +4099,8 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 	
-	void CheckClimbableEdges () {
+	void CheckClimbableEdges ()
+    {
 		
 		//determining if player has reached any of the edges of the climbable object
 		if (!pullingUp){
@@ -4157,7 +4181,8 @@ public class PlayerController : MonoBehaviour {
 				}
 				
 			}
-			else {
+			else
+            {
 				//top of climbable object has not been reached
 				reachedTopPoint = false;
 			}
@@ -4226,7 +4251,8 @@ public class PlayerController : MonoBehaviour {
 					reachedRightPoint = true;
 					
 				}
-				else {
+				else
+                {
 					//right edge of climbable object has not been reached
 					reachedRightPoint = false;
 				}
@@ -4314,16 +4340,20 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 	
-	void WallClimbingRotation () {
+	void WallClimbingRotation ()
+    {
 		
 		//rotation
-		if (currentlyClimbingWall && !pullingUp){
+		if (currentlyClimbingWall && !pullingUp)
+        {
 			
 			//only change the rotation normal if player is moving
-			if ((transform.rotation == lastRot3 || axisChanged) && (climbingMovement > 0 || Input.GetAxis("Horizontal") != 0) || hasNotMovedOnWallYet){
+			if ((transform.rotation == lastRot3 || axisChanged) && (climbingMovement > 0 || Input.GetAxis("Horizontal") != 0) || hasNotMovedOnWallYet)
+            {
 				
 				//to the right of player
-				if ((Input.GetAxis("Horizontal") > 0 || transform.rotation != lastRot2) && (wallIsClimbable)){
+				if ((Input.GetAxis("Horizontal") > 0 || transform.rotation != lastRot2) && (wallIsClimbable))
+                {
 					if (Physics.Linecast(transform.position + climbingSurfaceDetectorsUpAmount2 + (transform.up*(climbingSurfaceDetectorsHeight2 + 1))*0.5625f, transform.position + climbingSurfaceDetectorsUpAmount2 + transform.right/3 + (transform.up*(climbingSurfaceDetectorsHeight2 + 1))*0.5625f, out hit, collisionLayers) && hit.transform != null && hit.transform.tag == climbableTag2){
 						
 						if (Input.GetAxis("Horizontal") > 0){
@@ -4583,7 +4613,8 @@ public class PlayerController : MonoBehaviour {
 			if ((Input.GetAxis("Horizontal") > 0 && horizontalAxis <= 0 || Input.GetAxis("Horizontal") < 0 && horizontalAxis >= 0)){
 				axisChanged = true;
 			}
-			else {
+			else
+            {
 				axisChanged = false;
 			}
 			horizontalAxis = Input.GetAxis("Horizontal");
@@ -4613,9 +4644,11 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 	
-	void CheckIfStuck () {
+	void CheckIfStuck ()
+    {
 		
-		if (pushAgainstWallIfPlayerIsStuck2){
+		if (pushAgainstWallIfPlayerIsStuck2)
+        {
 			//if player is off of the surface of the wall
 			if (Physics.Linecast(transform.position + transform.up, transform.position + transform.forward + transform.up, out hit, collisionLayers) || Physics.Linecast(transform.position + transform.up*1.1f, transform.position + transform.forward + transform.up*1.1f, out hit, collisionLayers) || Physics.Linecast(transform.position + transform.up*1.2f, transform.position + transform.forward + transform.up*1.2f, out hit, collisionLayers)){
 				distFromWallWhenStuck = Vector3.Distance(new Vector3(hit.point.x, 0, hit.point.z), new Vector3(transform.position.x, 0, transform.position.z));
@@ -4628,7 +4661,8 @@ public class PlayerController : MonoBehaviour {
 				
 				//getting the player's first distance from the wall
 				if (currentlyClimbingWall){
-					if (firstDistFromWallWhenStuck == 0){
+					if (firstDistFromWallWhenStuck == 0)
+                    {
 						firstDistFromWallWhenStuck = distFromWallWhenStuck;
 					}
 				}
@@ -4637,57 +4671,73 @@ public class PlayerController : MonoBehaviour {
 				}
 			}
 			
-			if (climbedUpAlready){
+			if (climbedUpAlready)
+            {
 				//checking to see if the player is stuckInSamePos and not colliding
-				if (!stuckInSamePos || pullingUp){
+				if (!stuckInSamePos || pullingUp)
+                {
 					stuckInSamePosNoCol = false;
 				}
-				else if (noCollisionTimer > 25){
+				else if (noCollisionTimer > 25)
+                {
 					stuckInSamePosNoCol = true;
 				}
 				//checking to see if player is stuck on a collider
-				if (currentlyClimbingWall && climbingMovement > 0 && (Input.GetAxisRaw("Horizontal") > 0 && (!movement.sideScrolling.lockMovementOnXAxis && !movement.sideScrolling.lockMovementOnZAxis) || Input.GetAxisRaw("Horizontal") < 0 && (!movement.sideScrolling.lockMovementOnXAxis && !movement.sideScrolling.lockMovementOnZAxis) || Input.GetAxisRaw("Vertical") > 0 || Input.GetAxisRaw("Vertical") < 0) || pullingUp){
+				if (currentlyClimbingWall && climbingMovement > 0 && (Input.GetAxisRaw("Horizontal") > 0 && (!movement.sideScrolling.lockMovementOnXAxis && !movement.sideScrolling.lockMovementOnZAxis) || Input.GetAxisRaw("Horizontal") < 0 && (!movement.sideScrolling.lockMovementOnXAxis && !movement.sideScrolling.lockMovementOnZAxis) || Input.GetAxisRaw("Vertical") > 0 || Input.GetAxisRaw("Vertical") < 0) || pullingUp)
+                {
 					
 					//getting distance from the wall we are colliding with
-					if (transform.position == lastPos){
+					if (transform.position == lastPos)
+                    {
 						
-						if (noCollisionTimer < 5 ){
-							if (Physics.Linecast(transform.position + transform.up, transform.position + transform.forward/2 + transform.up, out hit, collisionLayers) || Physics.Linecast(transform.position + transform.up*1.1f, transform.position + transform.forward/2 + transform.up*1.1f, out hit, collisionLayers) || Physics.Linecast(transform.position + transform.up*1.2f, transform.position + transform.forward/2 + transform.up*1.2f, out hit, collisionLayers)){
+						if (noCollisionTimer < 5 )
+                        {
+							if (Physics.Linecast(transform.position + transform.up, transform.position + transform.forward/2 + transform.up, out hit, collisionLayers) || Physics.Linecast(transform.position + transform.up*1.1f, transform.position + transform.forward/2 + transform.up*1.1f, out hit, collisionLayers) || Physics.Linecast(transform.position + transform.up*1.2f, transform.position + transform.forward/2 + transform.up*1.2f, out hit, collisionLayers))
+                            {
 								distFromWallWhenStuck = Vector3.Distance(new Vector3(hit.point.x, 0, hit.point.z), new Vector3(transform.position.x, 0, transform.position.z));
 							}
 							if (!hasNotMovedOnWallYet && (Input.GetAxisRaw("Horizontal") > 0.1f && (!movement.sideScrolling.lockMovementOnXAxis && !movement.sideScrolling.lockMovementOnZAxis) || Input.GetAxisRaw("Horizontal") < -0.1f && (!movement.sideScrolling.lockMovementOnXAxis && !movement.sideScrolling.lockMovementOnZAxis)
-							|| Input.GetAxisRaw("Vertical") > 0.1f || Input.GetAxisRaw("Vertical") < -0.1f)){
+							|| Input.GetAxisRaw("Vertical") > 0.1f || Input.GetAxisRaw("Vertical") < -0.1f))
+                            {
 								stuckInSamePos = true;
 							}
 						}
 					}
-					if (transform.rotation != lastRot2 || Mathf.Abs(transform.position.y - lastPos.y) > 0.001f || stuckInSamePosNoCol && noCollisionTimer < 2){
+					if (transform.rotation != lastRot2 || Mathf.Abs(transform.position.y - lastPos.y) > 0.001f || stuckInSamePosNoCol && noCollisionTimer < 2)
+                    {
 						stuckInSamePos = false;
 						stuckInSamePosNoCol = false;
 					}
 					
-					if (GetComponent<CharacterController>() && GetComponent<CharacterController>().enabled){
+					if (GetComponent<CharacterController>() && GetComponent<CharacterController>().enabled)
+                    {
 						
 						//if player is stuck
-						if (!pullingUp && stuckInSamePos){
+						if (!pullingUp && stuckInSamePos)
+                        {
 							
 							//move the player slightly back to avoid collision
-							if (Physics.Linecast(transform.position + transform.up, transform.position + transform.forward/2 + transform.up, out hit, collisionLayers) || Physics.Linecast(transform.position + transform.up*1.1f, transform.position + transform.forward/2 + transform.up*1.1f, out hit, collisionLayers) || Physics.Linecast(transform.position + transform.up*1.2f, transform.position + transform.forward/2 + transform.up*1.2f, out hit, collisionLayers)){
-								if (distFromWallWhenStuck != 0){
+							if (Physics.Linecast(transform.position + transform.up, transform.position + transform.forward/2 + transform.up, out hit, collisionLayers) || Physics.Linecast(transform.position + transform.up*1.1f, transform.position + transform.forward/2 + transform.up*1.1f, out hit, collisionLayers) || Physics.Linecast(transform.position + transform.up*1.2f, transform.position + transform.forward/2 + transform.up*1.2f, out hit, collisionLayers))
+                            {
+								if (distFromWallWhenStuck != 0)
+                                {
 									transform.position = new Vector3((hit.point + (hit.normal / (distFromWallWhenStuck/(0.07f * (distFromWallWhenStuck/0.2601f))))*(distFromWallWhenStuck/0.2601f)).x, transform.position.y, (hit.point + (hit.normal / (distFromWallWhenStuck/(0.07f * (distFromWallWhenStuck/0.2601f))))*(distFromWallWhenStuck/0.2601f)).z);
 								}
-								else {
+								else
+                                {
 									transform.position = new Vector3((hit.point + (hit.normal/3.5f)).x, transform.position.y, (hit.point + (hit.normal/3.5f)).z);
 								}
 							}
-							else if (transform.position == lastPos && transform.rotation == lastRot2 || noCollisionTimer < 2){
+							else if (transform.position == lastPos && transform.rotation == lastRot2 || noCollisionTimer < 2)
+                            {
 								transform.position -= transform.forward/100;
 							}
 							
 						}
 						
 						//if player is stuck while climbing over a ledge, move the player slightly back and up to avoid collision
-						if (pullingUp && noCollisionTimer < 5 && transform.position == lastPos){
+						if (pullingUp && noCollisionTimer < 5 && transform.position == lastPos)
+                        {
 							transform.position -= transform.forward/25;
 							transform.position += transform.up/15;
 						}
@@ -4702,32 +4752,40 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 	
-	void ScriptEnablingDisabling () {
+	void ScriptEnablingDisabling ()
+    {
 		
 		//enabling and disabling scripts while player is on wall
-		if (currentlyClimbingWall || turnBack || back2 || pullingUp){
+		if (currentlyClimbingWall || turnBack || back2 || pullingUp)
+        {
 			//if scripts have not been disabled/enabled yet
-			if (!onWallScriptsFinished){
-				if (scriptsToDisableOnGrab != null){
+			if (!onWallScriptsFinished)
+            {
+				if (scriptsToDisableOnGrab != null)
+                {
 					foreach (string script in scriptsToDisableOnGrab)
 					{
 						scriptToDisable = GetComponent(script) as MonoBehaviour;
-						if (scriptToDisable != null){
+						if (scriptToDisable != null)
+                        {
 							scriptToDisable.enabled = false;
 						}
-						else if (!currentlyEnablingAndDisablingScripts){
+						else if (!currentlyEnablingAndDisablingScripts)
+                        {
 							scriptWarning = true;
 						}
 					}
 				}
-				if (scriptsToEnableOnGrab != null){
+				if (scriptsToEnableOnGrab != null)
+                {
 					foreach (string script in scriptsToEnableOnGrab)
 					{
 						scriptToEnable = GetComponent(script) as MonoBehaviour;
 						if (scriptToEnable != null){
 							scriptToEnable.enabled = true;
 						}
-						else if (!currentlyEnablingAndDisablingScripts){
+						else if (!currentlyEnablingAndDisablingScripts)
+                        {
 							scriptWarning = true;
 						}
 					}
@@ -4740,27 +4798,34 @@ public class PlayerController : MonoBehaviour {
 		//undoing enabling and disabling scripts when player lets go of wall
 		else {
 			//if scripts have not been un-disabled/enabled yet
-			if (onWallScriptsFinished){
-				if (scriptsToDisableOnGrab != null){
+			if (onWallScriptsFinished)
+            {
+				if (scriptsToDisableOnGrab != null)
+                {
 					foreach (string script in scriptsToDisableOnGrab)
 					{
 						scriptToDisable = GetComponent(script) as MonoBehaviour;
-						if (scriptToDisable != null){
+						if (scriptToDisable != null)
+                        {
 							scriptToDisable.enabled = true;
 						}
-						else if (!currentlyEnablingAndDisablingScripts || currentlyClimbingWall || turnBack || back2){
+						else if (!currentlyEnablingAndDisablingScripts || currentlyClimbingWall || turnBack || back2)
+                        {
 							scriptWarning = true;
 						}
 					}
 				}
-				if (scriptsToEnableOnGrab != null){
+				if (scriptsToEnableOnGrab != null)
+                {
 					foreach (string script in scriptsToEnableOnGrab)
 					{
 						scriptToEnable = GetComponent(script) as MonoBehaviour;
-						if (scriptToEnable != null){
+						if (scriptToEnable != null)
+                        {
 							scriptToEnable.enabled = false;
 						}
-						else if (!currentlyEnablingAndDisablingScripts || currentlyClimbingWall || turnBack || back2){
+						else if (!currentlyEnablingAndDisablingScripts || currentlyClimbingWall || turnBack || back2)
+                        {
 							scriptWarning = true;
 						}
 					}
@@ -4772,25 +4837,31 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		//all loops that enable or disable scripts have finished, so we set currentlyEnablingAndDisablingScripts to false
-		if (!currentlyClimbingWall && !turnBack && !back2 && !pullingUp){
+		if (!currentlyClimbingWall && !turnBack && !back2 && !pullingUp)
+        {
 			currentlyEnablingAndDisablingScripts = false;
 		}
 		//warns the user if any script names they entered do not exist on the player
-		if (scriptWarning){
-			if (scriptsToDisableOnGrab != null){
+		if (scriptWarning)
+        {
+			if (scriptsToDisableOnGrab != null)
+            {
 				foreach (string script in scriptsToDisableOnGrab)
 				{
 					scriptToDisable = GetComponent(script) as MonoBehaviour;
-					if (scriptToDisable == null){
+					if (scriptToDisable == null)
+                    {
 						Debug.Log("<color=red>The script to disable on grab named: </color>\"" + script + "\"<color=red> was not found on the player</color>");
 					}
 				}
 			}
-			if (scriptsToEnableOnGrab != null){
+			if (scriptsToEnableOnGrab != null)
+            {
 				foreach (string script in scriptsToEnableOnGrab)
 				{
 					scriptToEnable = GetComponent(script) as MonoBehaviour;
-					if (scriptToEnable == null){
+					if (scriptToEnable == null)
+                    {
 						Debug.Log("<color=red>The script to enable on grab named: </color>\"" + script + "\"<color=red> was not found on the player</color>");
 					}
 				}
@@ -4800,7 +4871,8 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 	
-	void OnControllerColliderHit (ControllerColliderHit hit) {
+	void OnControllerColliderHit (ControllerColliderHit hit)
+    {
 		
 		contactPoint = hit.point;
 		collisionSlopeAngle = Vector3.Angle(Vector3.up, hit.normal);
@@ -4808,7 +4880,8 @@ public class PlayerController : MonoBehaviour {
 		
 		//determining slope angles
 		slidingAngle = Vector3.Angle(hit.normal, Vector3.up);
-        if (slidingAngle >= slopeLimit) {
+        if (slidingAngle >= slopeLimit)
+        {
             slidingVector = hit.normal;
             if (slidingVector.y == 0){
 				slidingVector = Vector3.zero;
@@ -4819,24 +4892,30 @@ public class PlayerController : MonoBehaviour {
         }
  
         slidingAngle = Vector3.Angle(hit.normal, moveDirection - Vector3.up * moveDirection.y);
-        if (slidingAngle > 90) {
+        if (slidingAngle > 90)
+        {
             slidingAngle -= 90.0f;
-            if (slidingAngle > slopeLimit){
+            if (slidingAngle > slopeLimit)
+            {
 				slidingAngle = slopeLimit;
 			}
-            if (slidingAngle < slopeLimit){
+            if (slidingAngle < slopeLimit)
+            {
 				slidingAngle = 0;
 			}
         }
 		
 		//climbing walls/ladders
 		if (hit.gameObject.tag == climbableTag2 && wallIsClimbable && jumpedOffClimbableObjectTimer >= 0.3f
-		&& (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)){
-			if (snapToCenterOfObject2 && !snappingToCenter && !currentlyClimbingWall){
+		&& (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0))
+        {
+			if (snapToCenterOfObject2 && !snappingToCenter && !currentlyClimbingWall)
+            {
 				snapTimer = 0;
 				snappingToCenter = true;
 			}
-			if (!currentlyClimbingWall && GetComponent<Rigidbody>()){
+			if (!currentlyClimbingWall && GetComponent<Rigidbody>())
+            {
 				GetComponent<Rigidbody>().velocity = Vector3.zero;
 			}
 			currentlyClimbingWall = true;
@@ -4849,7 +4928,8 @@ public class PlayerController : MonoBehaviour {
 		
 		
 		//moving with moving platforms
-		if (hit.gameObject.tag == movingPlatformTag && allowMovingPlatformSupport){
+		if (hit.gameObject.tag == movingPlatformTag && allowMovingPlatformSupport)
+        {
 			//since we are colliding with the platform, set the no collision timer to 0
 			noCollisionWithPlatformTimer = 0;
 			
@@ -4871,18 +4951,22 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 	
-	void OnCollisionStay (Collision hit) {
+	void OnCollisionStay (Collision hit)
+    {
 		
-		foreach (ContactPoint contact in hit.contacts) {
+		foreach (ContactPoint contact in hit.contacts)
+        {
 			contactPoint = contact.point;
 			collisionSlopeAngle = Vector3.Angle(Vector3.up, contact.normal);
 			noCollisionTimer = 0;
 			
 			//determining slope angles
 			slidingAngle = Vector3.Angle(contact.normal, Vector3.up);
-			if (slidingAngle >= slopeLimit) {
+			if (slidingAngle >= slopeLimit)
+            {
 				slidingVector = contact.normal;
-				if (slidingVector.y == 0){
+				if (slidingVector.y == 0)
+                {
 					slidingVector = Vector3.zero;
 				}
 			}
@@ -4891,12 +4975,15 @@ public class PlayerController : MonoBehaviour {
 			}
  
 			slidingAngle = Vector3.Angle(contact.normal, moveDirection - Vector3.up * moveDirection.y);
-			if (slidingAngle > 90) {
+			if (slidingAngle > 90)
+            {
 				slidingAngle -= 90.0f;
-				if (slidingAngle > slopeLimit){
+				if (slidingAngle > slopeLimit)
+                {
 					slidingAngle = slopeLimit;
 				}
-				if (slidingAngle < slopeLimit){
+				if (slidingAngle < slopeLimit)
+                {
 					slidingAngle = 0;
 				}
 			}
@@ -4904,12 +4991,15 @@ public class PlayerController : MonoBehaviour {
 		
 		//climbing walls/ladders
 		if (hit.gameObject.tag == climbableTag2 && wallIsClimbable && jumpedOffClimbableObjectTimer >= 0.3f
-		&& (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)){
-			if (snapToCenterOfObject2 && !snappingToCenter && !currentlyClimbingWall){
+		&& (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0))
+        {
+			if (snapToCenterOfObject2 && !snappingToCenter && !currentlyClimbingWall)
+            {
 				snapTimer = 0;
 				snappingToCenter = true;
 			}
-			if (!currentlyClimbingWall && GetComponent<Rigidbody>()){
+			if (!currentlyClimbingWall && GetComponent<Rigidbody>())
+            {
 				GetComponent<Rigidbody>().velocity = Vector3.zero;
 			}
 			currentlyClimbingWall = true;
@@ -4921,12 +5011,14 @@ public class PlayerController : MonoBehaviour {
 		
 		
 		//moving with moving platforms
-		if (hit.gameObject.tag == movingPlatformTag && allowMovingPlatformSupport){
+		if (hit.gameObject.tag == movingPlatformTag && allowMovingPlatformSupport)
+        {
 			//since we are colliding with the platform, set the no collision timer to 0
 			noCollisionWithPlatformTimer = 0;
 			
 			//create and parent empty object (so that we can undo the parent's properties that affect the player's scale)
-			if (emptyObject == null){
+			if (emptyObject == null)
+            {
 				emptyObject = new GameObject();
 				emptyObject.transform.position = hit.transform.position;
 			}
@@ -4943,15 +5035,18 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 	
-	void OnTriggerStay (Collider hit) {
+	void OnTriggerStay (Collider hit)
+    {
 		
 		//moving with moving platforms
-		if (hit.gameObject.tag == movingPlatformTag && allowMovingPlatformSupport){
+		if (hit.gameObject.tag == movingPlatformTag && allowMovingPlatformSupport)
+        {
 			//since we are colliding with the platform, set the no collision timer to 0
 			noCollisionWithPlatformTimer = 0;
 			
 			//create and parent empty object (so that we can undo the parent's properties that affect the player's scale)
-			if (emptyObject == null){
+			if (emptyObject == null)
+            {
 				emptyObject = new GameObject();
 				emptyObject.transform.position = hit.transform.position;
 			}
@@ -4968,12 +5063,15 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 	
-	void OnDisable() {
+	void OnDisable()
+    {
 		
 		//resetting values
 		
-		if (GetComponent<Rigidbody>()){
-			if (!GetComponent<CharacterController>() || GetComponent<CharacterController>() && !GetComponent<CharacterController>().enabled){
+		if (GetComponent<Rigidbody>())
+        {
+			if (!GetComponent<CharacterController>() || GetComponent<CharacterController>() && !GetComponent<CharacterController>().enabled)
+            {
 				GetComponent<Rigidbody>().velocity = Vector3.zero;
 			}
 		}

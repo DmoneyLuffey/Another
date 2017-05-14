@@ -8,7 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public float currentHealth;
     private float health = 10;
     private Texture heartTexture;
-    public float healthStart = 0f;
+    private float healthStart = 0f;
     public float coolDown = 2f;
     public float healthDepletion = 1;
 
@@ -20,7 +20,7 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = health;
 
-        rect = new Rect(Screen.width * 0.005f, Screen.height * 0.25f, Screen.width * 0.05f, Screen.width * 0.05f); //Places Texture in Proper position
+        rect = new Rect(Screen.width * 0.019f, Screen.height * 0.15f, Screen.width * 0.01f, Screen.width * 0.05f); //Places Texture in Proper position
         heartTexture = Resources.Load("Images/TemporaryHealthImage") as Texture; //Loads texture being used
     }
 	
