@@ -5,13 +5,19 @@ using System.Collections;
 public class NPC : MonoBehaviour
 {
     public GameObject interaction;
-    public GameObject quest;
+    public GameObject line1;
+    public GameObject line2;
+    public GameObject line3;
     public Transform toonTrans;
+
+    public KeyCode initiate = KeyCode.E;
 
     private float dist;
     public float maxDist = 2;
 
     public bool isNear = false;
+    public bool isActive = false;
+    public bool canDisplay = false;
 
     // Use this for initialization
     void Start ()
@@ -39,17 +45,37 @@ public class NPC : MonoBehaviour
         }
     }
 
-    private void PlayerSearch()
+    public void PlayerSearch()
     {
         Vector3 dirToToon = (toonTrans.transform.position - this.transform.position).normalized;
         Ray ray = new Ray(this.transform.position, dirToToon);
-        if (dist <= maxDist)
+        if (dist <= maxDist && !isActive)
         {
-            isNear = true;
+            interaction.SetActive(true);
+            if (Input.GetKeyDown(initiate))
+            {
+                interaction.SetActive(false);
+                line1.SetActive(true);
+                isActive = true;
+            }
         }
-        else if (dist > maxDist)
+        if (dist > maxDist)
         {
-            isNear = false;
-        }
+            interaction.SetActive(false);
+            line1.SetActive(false);
+            line2.SetActive(false);
+            isActive = false;
+         }
+    }
+
+    public void OnContinue()
+    {
+        line1.SetActive(false);
+        line2.SetActive(true);
+    }
+
+    public void Collect()
+    {
+
     }
 }
