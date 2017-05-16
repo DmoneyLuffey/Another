@@ -76,6 +76,7 @@ public class NPC : MonoBehaviour
             line1.SetActive(false);
             line2.SetActive(false);
             line3.SetActive(false);
+            line3.SetActive(false);
             isActive = false;
             player.vialHolder.SetActive(false);
 
@@ -96,7 +97,6 @@ public class NPC : MonoBehaviour
 
     public void Collect()
     {
-        print("Heeheehee. That tickles");
         player.vials = player.vials + vialsToAward;
         player.vialsText.text = "Vials: " + player.vials.ToString();
         line2.SetActive(false);

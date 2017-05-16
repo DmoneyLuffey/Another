@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour
     {
         currentHealth = health;
         rb = this.GetComponent<Rigidbody>();
+        playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
     }
 
     // Update is called once per frame
