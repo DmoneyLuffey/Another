@@ -944,7 +944,7 @@ Prefab:
     - target: {fileID: 11446188, guid: 18694017459bc9342a2d7f5173fc6bec, type: 2}
       propertyPath: playerHealth
       value: 
-      objectReference: {fileID: 177355767}
+      objectReference: {fileID: 0}
     - target: {fileID: 11446188, guid: 18694017459bc9342a2d7f5173fc6bec, type: 2}
       propertyPath: toonTrans
       value: 
@@ -1002,7 +1002,7 @@ Prefab:
     - target: {fileID: 11446188, guid: 18694017459bc9342a2d7f5173fc6bec, type: 2}
       propertyPath: playerHealth
       value: 
-      objectReference: {fileID: 177355767}
+      objectReference: {fileID: 0}
     - target: {fileID: 11446188, guid: 18694017459bc9342a2d7f5173fc6bec, type: 2}
       propertyPath: toonTrans
       value: 
@@ -1078,9 +1078,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: There! Now that you've got some Vials, its time for you to spend them on
     something useful.... What? You thought you could keep them forever? You've got
-    enemies you defeat! Here, I'll tell you what, you can keep the Vials you gain
-    from the enemies. In the mean time, Buy these Magnet Gauntlets. Believe me, you
-    Will need them.
+    enemies to defeat! Here, I'll tell you what, you can keep the Vials you gain from
+    the enemies. In the mean time, Buy these Magnet Gauntlets. Believe me, you Will
+    need them.
 --- !u!222 &1218919029
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1337,7 +1337,6 @@ RectTransform:
   m_Children:
   - {fileID: 1782007712}
   - {fileID: 172300}
-  - {fileID: 1584921721}
   m_Father: {fileID: 506165551}
   m_RootOrder: 3
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1418,73 +1417,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1552773267}
---- !u!1 &1584921720
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 224: {fileID: 1584921721}
-  - 222: {fileID: 1584921723}
-  - 114: {fileID: 1584921722}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1584921721
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1584921720}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1482047808}
-  m_RootOrder: 2
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 162.57}
-  m_SizeDelta: {x: 150, y: 150}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1584921722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1584921720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &1584921723
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1584921720}
 --- !u!1 &1592577435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,7 +1759,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Wow! Those fit you nicely. Listen.... if you didn't already know, those
-    Gauntlets are heavily magnetized. That means you can move any metal object! believe
+    Gauntlets are heavily magnetized. That means you can move any metal object! Believe
     me when I tell you this.... there is a lot of metal! Good luck out there Sergei!
     And remember, if you see anyone of my models, stop by and buy Tools from us! See
     ya!
@@ -1892,7 +1824,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ff623ae38b8e8e046aec216a9f1f85cf, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -2468,7 +2400,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 68f022fffc57a194084894a964f3d7d2, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -2511,7 +2443,7 @@ Transform:
   m_GameObject: {fileID: 2139339489}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 15.82, y: 1, z: 17.96}
+  m_LocalScale: {x: 75.936005, y: 1, z: 86.208}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
