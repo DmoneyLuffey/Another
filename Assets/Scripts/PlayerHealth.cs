@@ -38,7 +38,7 @@ public class PlayerHealth : MonoBehaviour
             {
                 Rect newRect = new Rect(rect.x, rect.y, rect.width, rect.width); //Positions array of textures
 
-                GUI.DrawTexture(new Rect(rect.x * (.9f * i + 15), rect.y - 60, 50, 18), heartTexture); //Draws textrues
+                GUI.DrawTexture(new Rect(rect.x * (2.1f * i + 1), rect.y - 60, 50, 18), heartTexture); //Draws textrues
             }
         }
     }
