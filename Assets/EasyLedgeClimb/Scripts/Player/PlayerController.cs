@@ -19,6 +19,7 @@
 using UnityEngine;
 using System.Collections;
 
+
 public class PlayerController : MonoBehaviour
 {
 	
@@ -564,6 +565,9 @@ public class PlayerController : MonoBehaviour
     public Vector3 jump2;
     public float jumpForce = 50.0f;
     Rigidbody rb;
+    public Transform player;
+    Vector3 fwd;
+    
     
 
     // Use this for initialization
@@ -648,7 +652,8 @@ public class PlayerController : MonoBehaviour
 		if (attackState == 0){
 			attacksToPerform = attacking.numberAndStrengthOfAttacks;
 		}
-		else {
+		else
+        {
 			attacksToPerform = attacking.numberAndStrengthOfMidAirAttacks;
 		}
 		timeLimitBetweenAttacks2 = attacking.timeLimitBetweenAttacks;
@@ -788,6 +793,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.V))
         {
             gravity = 20.0f;
+        }
+        Vector3 fwd = transform.TransformDirection(Vector3.forward);
+        //Mag Glove (Pedro)
+        if (Input.GetKeyDown(KeyCode.E) && Physics.Raycast(transform.position, fwd, 2) && GameObject.FindWithTag("Iron"))
+        {
+            print("Hello");
         }
 
 
@@ -973,7 +984,8 @@ public class PlayerController : MonoBehaviour
 		
 	}
 	
-	void FixedUpdate () {
+	void FixedUpdate ()
+    {
 		
 		ChangeColliderHeightForCrouch();
 		
@@ -1043,6 +1055,10 @@ public class PlayerController : MonoBehaviour
 		CrouchAttack();
 	
 	}
+   // void OnTriggerEnter(Collider player)
+    //{
+        
+  //  }
 	
 	void ChangeColliderHeightForCrouch () {
 		
