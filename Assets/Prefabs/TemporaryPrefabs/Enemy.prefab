@@ -195,6 +195,7 @@ MonoBehaviour:
   playerDamage: 1
   canAttack: 0
   isAttacking: 1
+  anim: {fileID: 9546644}
 --- !u!136 &13633732
 CapsuleCollider:
   m_ObjectHideFlags: 1

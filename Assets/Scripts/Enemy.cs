@@ -70,7 +70,7 @@ public class Enemy : MonoBehaviour
             if (canAttack)
             {
                 isAttacking = true;
-                Debug.Log("Hey, I'm hitting you.");
+                //Debug.Log("Hey, I'm hitting you.");
                 DamagePlayer(playerDamage);
             }
         }

@@ -5,6 +5,8 @@ public class PlayerHealth : MonoBehaviour
 {
     Rect rect;
 
+    public string levelToLoad = "";
+
     public float currentHealth;
     private float health = 10;
     private Texture heartTexture;
@@ -20,8 +22,8 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = health;
 
-        rect = new Rect(Screen.width * 0.019f, Screen.height * 0.15f, Screen.width * 0.01f, Screen.width * 0.05f); //Places Texture in Proper position
-        heartTexture = Resources.Load("Images/TemporaryHealthImage") as Texture; //Loads texture being used
+        rect = new Rect(Screen.width * 0.015f, Screen.height * 0.15f, Screen.width * 0.015f, Screen.width * 0.05f); //Places Texture in Proper position
+        heartTexture = Resources.Load("Images/Heart") as Texture; //Loads texture being used
     }
 	
 	// Update is called once per frame
@@ -38,7 +40,7 @@ public class PlayerHealth : MonoBehaviour
             {
                 Rect newRect = new Rect(rect.x, rect.y, rect.width, rect.width); //Positions array of textures
 
-                GUI.DrawTexture(new Rect(rect.x * (2.1f * i + 1), rect.y - 60, 50, 18), heartTexture); //Draws textrues
+                GUI.DrawTexture(new Rect(rect.x * (3f * i + 1), rect.y - 100, 70, 60), heartTexture); //Draws textrues
             }
         }
     }
