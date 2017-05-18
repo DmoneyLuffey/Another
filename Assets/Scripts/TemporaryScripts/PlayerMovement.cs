@@ -14,9 +14,9 @@ public class PlayerMovement : MonoBehaviour
     public Slider healthSlider = null;
     public Text healthText;
 
-    public GameObject vialHolder;
+    /*public GameObject vialHolder;
     public Text vialsText;
-    public int vials;
+    public int vials;*/
 
     public float maxHealth = 100;
     public float health;
@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     void Start ()
     {
         rb = this.GetComponent<Rigidbody>();
-        vialsText.text = "Vials: " + vials.ToString();
+        
     }
 	
 	// Update is called once per frame
@@ -72,14 +72,7 @@ public class PlayerMovement : MonoBehaviour
             transform.Rotate(Vector3.up * -turnSpeed * Time.deltaTime);
         }
 
-        if(Input.GetKey(KeyCode.I))
-        {
-            vialHolder.SetActive(true);
-        }
-        else if(Input.GetKeyUp(KeyCode.I))
-        {
-            vialHolder.SetActive(false);
-        }
+       
     }
 
    /* public void HealthRegen(float amount)

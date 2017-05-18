@@ -10,7 +10,7 @@ public class NPC : MonoBehaviour
     public GameObject line3;
     public GameObject line4;
     
-    public PlayerMovement player;
+    public ResourseUI player;
     
     public Transform toonTrans;
 
@@ -30,7 +30,8 @@ public class NPC : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        player = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        player = GameObject.Find("Player").GetComponent<ResourseUI>();
+        toonTrans = GameObject.Find("Player").GetComponent<Transform>();
         
     }
 	

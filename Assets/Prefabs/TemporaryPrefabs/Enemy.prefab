@@ -187,6 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 0}
   toonTrans: {fileID: 0}
+  currentHealth: 0
   maxDist: 5
   distCheck: 10
   moveSpeed: 5
