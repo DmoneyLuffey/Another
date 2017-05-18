@@ -26,8 +26,8 @@ public class Enemy : MonoBehaviour
     {
         currentHealth = health;
         rb = this.GetComponent<Rigidbody>();
-        playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
-        toonTrans = GameObject.Find("Player").GetComponent<Transform>();
+        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        toonTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     // Update is called once per frame
