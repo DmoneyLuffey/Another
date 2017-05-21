@@ -61,6 +61,7 @@ public class NPC : MonoBehaviour
         Ray ray = new Ray(this.transform.position, dirToToon);
         if (dist <= maxDist && !isActive && !completed)
         {
+            hasApproached = true;
             isNear = true;
             interaction.SetActive(true);
             if (Input.GetKeyDown(initiate))
@@ -70,7 +71,7 @@ public class NPC : MonoBehaviour
                 isActive = true;
             }
         }
-        if (dist > maxDist && !completed)
+        if (dist > maxDist && !completed && hasApproached)
         {
             isNear = false;
             interaction.SetActive(false);

@@ -6,7 +6,12 @@ public class ResourseUI : MonoBehaviour
 {
     public GameObject vialHolder;
     public Text vialsText;
+
     public int vials;
+    public float timeStart = 0f;
+    public float timeDown = 2f;
+
+    public bool pickedUp = false;
 
     // Use this for initialization
     void Start ()
@@ -24,6 +29,25 @@ public class ResourseUI : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.I))
         {
             vialHolder.SetActive(false);
+        }
+        OnCollect();
+    }
+
+    public void OnCollect()
+    {
+        if(pickedUp)
+        {
+            vialHolder.SetActive(true);
+            timeStart += Time.deltaTime;
+            if (timeStart < timeDown + Time.deltaTime)
+            {
+                if (timeStart >= timeDown)
+                {
+                    timeStart = 0;
+                    pickedUp = false;
+                    vialHolder.SetActive(false);
+                }
+            }
         }
     }
 }
