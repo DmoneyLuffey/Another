@@ -8,6 +8,9 @@ public class Enemy : MonoBehaviour
     public Transform toonTrans;
     private Rigidbody rb;
 
+    public Vector3 respawnLocation; //the location at which the enemy respawns
+    public Vector3 respawnRotation;
+
     public float currentHealth;
     private float health = 10;
     private float dist;
@@ -136,7 +139,7 @@ public class Enemy : MonoBehaviour
 
     public void Respawn()
     {
-        transform.position = enemyRespawn.position;
-        transform.rotation = enemyRespawn.rotation;
+        transform.position = respawnLocation;
+        //transform.rotation = respawnRotation;
     }
 }
