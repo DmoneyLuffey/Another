@@ -6,8 +6,8 @@ public class ResourseUI : MonoBehaviour
 {
     public GameObject vialHolder;
     public Text vialsText;
-
-    public int vials;
+    
+public int vials;
     public float timeStart = 0f;
     public float timeDown = 2f;
 

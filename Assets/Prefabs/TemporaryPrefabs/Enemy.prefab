@@ -32,9 +32,10 @@ GameObject:
   - 114: {fileID: 11446188}
   - 54: {fileID: 5438136}
   - 95: {fileID: 9546644}
+  - 114: {fileID: 11457150}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,7 +59,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189260}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.1, y: 1.5, z: -29.3}
+  m_LocalPosition: {x: 17.352243, y: 1.5, z: 13.197868}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 434954}
@@ -188,7 +189,9 @@ MonoBehaviour:
   playerHealth: {fileID: 0}
   enemyRespawn: {fileID: 0}
   toonTrans: {fileID: 0}
-  currentHealth: 0
+  respawnLocation: {x: 17.35224, y: 1.5, z: 13.19787}
+  respawnRotation: {x: 0, y: 0, z: 0}
+  currentHealth: 100
   maxDist: 5
   distCheck: 10
   moveSpeed: 5
@@ -199,6 +202,19 @@ MonoBehaviour:
   canAttack: 0
   isAttacking: 1
   isDead: 0
+--- !u!114 &11457150
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8160e02f1cc36c848803a38366ab4793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies: {fileID: 0}
+  enemy: {fileID: 0}
 --- !u!136 &13633732
 CapsuleCollider:
   m_ObjectHideFlags: 1
