@@ -10,13 +10,13 @@ public class Iron : MonoBehaviour
 
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         SetParent();
         Vector3 aoe = transform.TransformDirection(Vector3.one);
@@ -25,7 +25,11 @@ public class Iron : MonoBehaviour
     void OnTriggerEnter(Collider player)
     {
         hold = true;
-       
+
+    }
+    void OnTriggerExit(Collider player)
+    {
+        hold = false;
     }
    
     public void SetParent()
