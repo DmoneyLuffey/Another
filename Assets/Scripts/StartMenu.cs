@@ -3,27 +3,36 @@ using System.Collections;
 
 public class StartMenu : MonoBehaviour
 {
+    public GameObject MainMenu;
+    public GameObject Options;
+    public GameObject Credits;
 
-    AudioSource[] asc;
-    //private static float vol = GameObject.GetComponents<AudioSource>().volume;
-    public AudioSource MasterAudioSource;
-    // Use this for initialization
-    void Start()
+	// Use this for initialization
+	void Start ()
     {
-        asc = GetComponents<AudioSource>();
+	
+	}
+	
+	// Update is called once per frame
+	void Update ()
+    {
+	
+	}
+
+    public void OnOption()
+    {
+        MainMenu.SetActive(false);
+        Options.SetActive(true);
     }
-
-    // Update is called once per frame
-    void Update()
+    public void OnCredit()
     {
-        SetVolume();
+        MainMenu.SetActive(false);
+        Credits.SetActive(true);
     }
-
-    public void SetVolume()
+   public  void OnReturn()
     {
-        for (int i = 0; i < asc.Length; i++)
-        {
-            asc[i].volume = MasterAudioSource.volume;
-        }
+        Credits.SetActive(false);
+        Options.SetActive(false);
+        MainMenu.SetActive(true);
     }
 }
