@@ -121,6 +121,7 @@ public class Enemy : MonoBehaviour
         if(currentHealth <= 0)
         {
             transform.position = transform.position + Vector3.up * 1000; //just need to put him some place off screen
+            isDead = true;
             waitingForRespawn = true;
         }
 
@@ -129,6 +130,7 @@ public class Enemy : MonoBehaviour
             respawnStart += Time.deltaTime;
             if (respawnStart >= respawnCoolDown)
             {
+                isDead = false;
                 Respawn();
                 waitingForRespawn = false;
                 currentHealth = health;
