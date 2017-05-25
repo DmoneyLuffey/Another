@@ -13,10 +13,13 @@ public class Collect : MonoBehaviour
     public float rotationSpeed;
     public float moveSpeed;
 
+    public float minSpeed = 0;
+    public float maxSpeed = 0;
+
     // Use this for initialization
     void Start ()
     {
-        moveSpeed = Random.Range(1, 7);
+        moveSpeed = Random.Range(minSpeed, maxSpeed);
         playerUI = GameObject.FindGameObjectWithTag("Player").GetComponent<ResourseUI>();
         player = GameObject.FindGameObjectWithTag("Player");
         target = GameObject.FindWithTag("Player").transform;

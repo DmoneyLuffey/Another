@@ -16,7 +16,7 @@ public class Drop : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        transform.position = this.transform.localPosition;
+        respawnLocation = this.transform.localPosition;
         death = this.GetComponent<Enemy>();
 	}
 	

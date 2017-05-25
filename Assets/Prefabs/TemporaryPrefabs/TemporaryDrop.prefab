@@ -98,6 +98,8 @@ MonoBehaviour:
   vialAmount: 1
   rotationSpeed: 4
   moveSpeed: 10
+  minSpeed: 4
+  maxSpeed: 9
 --- !u!135 &13589162
 SphereCollider:
   m_ObjectHideFlags: 1
