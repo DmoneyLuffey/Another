@@ -44,7 +44,7 @@ public class Iron : MonoBehaviour
     }
     public void DetachFromParent()
     {
-        if (Input.GetKeyUp(KeyCode.E) && hold &&GameObject.FindWithTag("Player"))
+        if (Input.GetKeyUp(KeyCode.E) && hold  &&GameObject.FindWithTag("Player"))
         {
             print("yes");
            childObj.transform.parent = null;
