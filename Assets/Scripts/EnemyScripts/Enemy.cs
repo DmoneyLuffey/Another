@@ -73,7 +73,6 @@ public class Enemy : MonoBehaviour
         Ray ray = new Ray(this.transform.position, dirToToon);
         if (dist < maxDist && canRun)
         {
-            isRunning = true;
             if(isRunning)
             {
                 
@@ -82,14 +81,18 @@ public class Enemy : MonoBehaviour
                 movementDir.Normalize();
                 transform.LookAt(toonTrans);
                 this.rb.MovePosition(this.transform.position + movementDir * (moveSpeed * Time.deltaTime));
-                anim.SetTrigger(runAnim);
+                
             }
             
         }
 
-        if(!canRun)
+        if(canRun)
         {
-            isRunning = false;
+            isRunning = true;
+            if(isRunning)
+            {
+                anim.SetTrigger(runAnim);
+            }
         }
         
         if (dist <= 1.5 && !isDead)
@@ -98,6 +101,7 @@ public class Enemy : MonoBehaviour
             canAttack = true;
             if (canAttack)
             {
+                anim.SetTrigger(attackAnim);
                 isAttacking = true;
                 //anim.SetTrigger(attackAnim);
                 //Debug.Log("Hey, I'm hitting you.");
@@ -140,7 +144,7 @@ public class Enemy : MonoBehaviour
                     playerHealth.isHit = true;
                     damageStart = Time.time;
                     playerHealth.Damage(playerDamage);
-                    anim.SetTrigger(attackAnim);
+                    
 
                 }
             }
