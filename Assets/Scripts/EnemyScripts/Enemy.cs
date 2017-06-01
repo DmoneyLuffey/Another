@@ -3,6 +3,10 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
+    public string attackAnim = "";
+    public string standAnim = "";
+    public string runAnim = "";
+    public Animator anim;
     public PlayerHealth playerHealth;
     public Transform enemyRespawn;
     public Transform toonTrans;
@@ -29,6 +33,9 @@ public class Enemy : MonoBehaviour
     public bool isAttacking = true;
     private bool isNear = false;
     public bool isDead = false;
+
+    public bool canRun = true;
+    public bool isRunning = false;
 
     // Use this for initialization
     void Start()
@@ -64,30 +71,42 @@ public class Enemy : MonoBehaviour
     {
         Vector3 dirToToon = (toonTrans.transform.position - this.transform.position).normalized;
         Ray ray = new Ray(this.transform.position, dirToToon);
-        if (dist < maxDist)
+        if (dist < maxDist && canRun)
         {
-            isNear = true;
-            Vector3 movementDir = this.transform.forward;
-            movementDir.Normalize();
-            transform.LookAt(toonTrans);
-            this.rb.MovePosition(this.transform.position + movementDir * (moveSpeed * Time.deltaTime));
+            isRunning = true;
+            if(isRunning)
+            {
+                
+                isNear = true;
+                Vector3 movementDir = this.transform.forward;
+                movementDir.Normalize();
+                transform.LookAt(toonTrans);
+                this.rb.MovePosition(this.transform.position + movementDir * (moveSpeed * Time.deltaTime));
+                anim.SetTrigger(runAnim);
+            }
+            
         }
-        else
+
+        if(!canRun)
         {
-            isNear = false;
+            isRunning = false;
         }
+        
         if (dist <= 1.5 && !isDead)
         {
+            canRun = false;
             canAttack = true;
             if (canAttack)
             {
                 isAttacking = true;
+                //anim.SetTrigger(attackAnim);
                 //Debug.Log("Hey, I'm hitting you.");
                 DamagePlayer(playerDamage);
             }
         }
         if (dist > 1.5 && isNear)
         {
+            canRun = true;
             canAttack = false;
             if(!canAttack)
             {
@@ -98,20 +117,31 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
+        if(dist > maxDist)
+        {
+            isRunning = false;
+            canRun = true;
+            //anim.SetTrigger(standAnim);
+            isNear = false;
+        }
     }
 
     public void DamagePlayer(float playerDamage)
     {
         if(canAttack && isAttacking)
         {
+            isRunning = false;
             if (Time.time > damageStart + damageCoolDown)
             {
+                
                 if (isAttacking)
                 {
+                    
                     playerHealth.isHit = true;
                     damageStart = Time.time;
                     playerHealth.Damage(playerDamage);
-                    //anim.SetTrigger("Attack");
+                    anim.SetTrigger(attackAnim);
+
                 }
             }
         }
