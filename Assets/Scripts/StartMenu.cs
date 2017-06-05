@@ -25,6 +25,7 @@ public class StartMenu : MonoBehaviour
     public void OnPlay()
     {
         SceneManager.LoadScene(startGame);
+        Time.timeScale = 1;
     }
     public void OnOption()
     {
