@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class StartMenu : MonoBehaviour
@@ -7,8 +8,10 @@ public class StartMenu : MonoBehaviour
     public GameObject Options;
     public GameObject Credits;
 
-	// Use this for initialization
-	void Start ()
+    public string startGame = "";
+
+    // Use this for initialization
+    void Start ()
     {
 	
 	}
@@ -19,6 +22,10 @@ public class StartMenu : MonoBehaviour
 	
 	}
 
+    public void OnPlay()
+    {
+        SceneManager.LoadScene(startGame);
+    }
     public void OnOption()
     {
         MainMenu.SetActive(false);

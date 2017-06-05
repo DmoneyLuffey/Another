@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
@@ -35,6 +36,7 @@ public class PlayerHealth : MonoBehaviour
 	void Update ()
     {
         Damage(0);
+        Death();
     }
 
     void OnGUI()
@@ -113,6 +115,14 @@ public class PlayerHealth : MonoBehaviour
                     isAttacked = false;
                 }
             }
+        }
+    }
+
+    public void Death()
+    {
+        if(currentHealth <= 0)
+        {
+            SceneManager.LoadScene(levelToLoad);
         }
     }
 }
