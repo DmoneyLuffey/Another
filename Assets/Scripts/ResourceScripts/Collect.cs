@@ -42,7 +42,7 @@ public class Collect : MonoBehaviour
             playerUI.pickedUp = true;
             playerUI.vials = playerUI.vials + vialAmount;
             playerUI.vialsText.text = "Vials: " + playerUI.vials.ToString();
-            print("Hello");
+            
             Destroy(this.gameObject);
         }
     }

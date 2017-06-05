@@ -43,6 +43,7 @@ public class NPC : MonoBehaviour
             dist = Vector3.Distance(toonTrans.position, transform.position);
             LookAt();
             PlayerSearch();
+            Interaction();
         }
     }
 
@@ -117,5 +118,34 @@ public class NPC : MonoBehaviour
         completed = true;
         player.vialHolder.SetActive(false);
         line4.SetActive(false);
+    }
+    public void Interaction()
+    {
+        if(line1.activeInHierarchy && Input.GetKeyDown(initiate))
+        {
+            player.vialHolder.SetActive(true);
+            line1.SetActive(false);
+            line2.SetActive(true);
+        }
+        else if (line2.activeInHierarchy && Input.GetKeyDown(initiate))
+        {
+            player.vials = player.vials + vialsToAward;
+            player.vialsText.text = "Vials: " + player.vials.ToString();
+            line2.SetActive(false);
+            line3.SetActive(true);
+        }
+        else if (line3.activeInHierarchy && Input.GetKeyDown(initiate))
+        {
+            player.vials = player.vials - price;
+            player.vialsText.text = "Vials: " + player.vials.ToString();
+            line3.SetActive(false);
+            line4.SetActive(true);
+        }
+        else if (line4.activeInHierarchy && Input.GetKeyDown(initiate))
+        {
+            player.vialHolder.SetActive(false);
+            line4.SetActive(false);
+            completed = true;
+        }
     }
 }

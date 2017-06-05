@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
         toonTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        //enemyRespawn = this.gameObject.GetComponent<Transform>();
+        respawnLocation = this.transform.position;
     }
 
     // Update is called once per frame
