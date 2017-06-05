@@ -6,6 +6,13 @@ public class PlayerHealth : MonoBehaviour
 {
     Rect rect;
 
+    public Transform player;
+    public GameObject death;
+    public Transform repsawnPoint;
+    public KeyCode reset = KeyCode.E;
+
+    public Vector3 respawnLocation;
+
     public string levelToLoad = "";
 
     public float currentHealth;
@@ -25,8 +32,9 @@ public class PlayerHealth : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        player = this.gameObject.GetComponent<Transform>();
         currentHealth = health;
-
+        respawnLocation = repsawnPoint.transform.position;
         rect = new Rect(Screen.width * 0.015f, Screen.height * 0.15f, Screen.width * 0.015f, Screen.width * 0.05f); //Places Texture in Proper position
         heartTexture = Resources.Load("Images/Heart") as Texture; //Loads texture being used
         emptyTexture = Resources.Load("Images/EmptyHeart") as Texture;
@@ -37,6 +45,10 @@ public class PlayerHealth : MonoBehaviour
     {
         Damage(0);
         Death();
+        if(player.position.y < -55.3)
+        {
+            transform.position = respawnLocation;
+        }
     }
 
     void OnGUI()
@@ -122,7 +134,15 @@ public class PlayerHealth : MonoBehaviour
     {
         if(currentHealth <= 0)
         {
-            SceneManager.LoadScene(levelToLoad);
+            Time.timeScale = 0;
+            death.SetActive(true);
+            if(death.activeInHierarchy)
+            {
+                if(Input.GetKeyDown(reset))
+                {
+                    SceneManager.LoadScene(levelToLoad);
+                }
+            }
         }
     }
 }

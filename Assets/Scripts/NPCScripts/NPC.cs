@@ -5,6 +5,7 @@ using System.Collections;
 public class NPC : MonoBehaviour
 {
     public GameObject interaction;
+    public GameObject talking;
     public GameObject line1;
     public GameObject line2;
     public GameObject line3;
@@ -68,6 +69,7 @@ public class NPC : MonoBehaviour
             if (Input.GetKeyDown(initiate))
             {
                 interaction.SetActive(false);
+                talking.SetActive(true);
                 line1.SetActive(true);
                 isActive = true;
             }
@@ -143,6 +145,7 @@ public class NPC : MonoBehaviour
         }
         else if (line4.activeInHierarchy && Input.GetKeyDown(initiate))
         {
+            talking.SetActive(false);
             player.vialHolder.SetActive(false);
             line4.SetActive(false);
             completed = true;
