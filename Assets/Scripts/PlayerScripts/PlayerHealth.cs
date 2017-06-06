@@ -45,7 +45,7 @@ public class PlayerHealth : MonoBehaviour
     {
         Damage(0);
         Death();
-        if(player.position.y < -55.3)
+        if(player.position.y < -53.0)
         {
             transform.position = respawnLocation;
         }
