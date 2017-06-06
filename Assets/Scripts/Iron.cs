@@ -12,7 +12,7 @@ public class Iron : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -24,12 +24,19 @@ public class Iron : MonoBehaviour
     }
     void OnTriggerEnter(Collider player)
     {
-        hold = true;
+        if(player.gameObject.tag=="Player")
+        {
+            hold = true;
+        }
+        
 
     }
     void OnTriggerExit(Collider player)
     {
-        hold = false;
+        if (player.gameObject.tag == "Player")
+        {
+            hold = false;
+        }
     }
    
     public void SetParent()

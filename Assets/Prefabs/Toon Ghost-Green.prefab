@@ -630,6 +630,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies: {fileID: 0}
   enemy: {fileID: 0}
+  enemyRespawn: {fileID: 0}
+  toonTrans: {fileID: 0}
+  maxDist: 2
+  distCheck: 10
+  damageCoolDown: 2
 --- !u!114 &11498558
 MonoBehaviour:
   m_ObjectHideFlags: 1
