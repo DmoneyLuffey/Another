@@ -745,7 +745,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 150112}
-  m_LocalRotation: {x: 0.71122646, y: 0.7028482, z: -0.007410059, w: 0.010324803}
+  m_LocalRotation: {x: 0.71122646, y: 0.7028482, z: -0.0074100597, w: 0.010324803}
   m_LocalPosition: {x: -0.068068825, y: -0.086726665, z: -0.0070245373}
   m_LocalScale: {x: 0.9999999, y: 1.0000001, z: 1.0000004}
   m_Children:
@@ -902,7 +902,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 172524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -407.19025, y: -27.053265, z: -234.43}
+  m_LocalPosition: {x: -479.3932, y: -28.572678, z: -265.51974}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 466626}
@@ -1415,7 +1415,7 @@ MonoBehaviour:
   minViles: 3
   maxViles: 6
   timer: 0
-  rateOfFire: 4
+  rateOfFire: 1.5
 --- !u!114 &11491550
 MonoBehaviour:
   m_ObjectHideFlags: 1
