@@ -28,7 +28,7 @@ public class WinCondition : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.tag == "Sergei")
         {
             congratulations.SetActive(true);
             Time.timeScale = 0;
