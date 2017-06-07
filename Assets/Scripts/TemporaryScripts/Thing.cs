@@ -20,7 +20,7 @@ public class Thing : MonoBehaviour
     {
         enemies = this.gameObject;
         enemy = this.gameObject.GetComponent<Enemy>();
-        toonTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        toonTrans = GameObject.FindGameObjectWithTag("Sergei").GetComponent<Transform>();
     }
 	
 	// Update is called once per frame

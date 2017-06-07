@@ -12,7 +12,7 @@ public class Iron : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Sergei");
     }
 
     // Update is called once per frame
@@ -24,7 +24,7 @@ public class Iron : MonoBehaviour
     }
     void OnTriggerEnter(Collider player)
     {
-        if(player.gameObject.tag=="Player")
+        if(player.gameObject.tag=="Sergei")
         {
             hold = true;
         }
@@ -33,7 +33,7 @@ public class Iron : MonoBehaviour
     }
     void OnTriggerExit(Collider player)
     {
-        if (player.gameObject.tag == "Player")
+        if (player.gameObject.tag == "Sergei")
         {
             hold = false;
         }
@@ -41,7 +41,7 @@ public class Iron : MonoBehaviour
    
     public void SetParent()
     {
-        if (Input.GetKeyDown(KeyCode.E) && hold && GameObject.FindWithTag("Player"))
+        if (Input.GetKeyDown(KeyCode.E) && hold && GameObject.FindWithTag("Sergei"))
         {
             print("HERP");
             childObj.transform.parent = player.transform;
@@ -51,7 +51,7 @@ public class Iron : MonoBehaviour
     }
     public void DetachFromParent()
     {
-        if (Input.GetKeyUp(KeyCode.E) && hold  &&GameObject.FindWithTag("Player"))
+        if (Input.GetKeyUp(KeyCode.E) && hold  &&GameObject.FindWithTag("Sergei"))
         {
             print("yes");
            childObj.transform.parent = null;

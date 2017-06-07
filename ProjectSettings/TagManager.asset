@@ -5,6 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - Iron
+  - Coin
+  - Heart
+  - Enemy
+  - Hurt
+  - Platform
+  - Ladder
+  - Vines
+  - Sergei
+  - Health
   layers:
   - Default
   - TransparentFX

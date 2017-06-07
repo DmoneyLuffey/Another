@@ -43,8 +43,8 @@ public class Enemy : MonoBehaviour
         isDead = false;
         currentHealth = health;
         rb = this.GetComponent<Rigidbody>();
-        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
-        toonTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        playerHealth = GameObject.FindGameObjectWithTag("Sergei").GetComponent<PlayerHealth>();
+        toonTrans = GameObject.FindGameObjectWithTag("Sergei").GetComponent<Transform>();
         respawnLocation = this.transform.position;
     }
 

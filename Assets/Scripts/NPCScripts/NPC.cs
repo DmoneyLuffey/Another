@@ -31,8 +31,8 @@ public class NPC : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<ResourseUI>();
-        toonTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        player = GameObject.FindGameObjectWithTag("Sergei").GetComponent<ResourseUI>();
+        toonTrans = GameObject.FindGameObjectWithTag("Sergei").GetComponent<Transform>();
         
     }
 	

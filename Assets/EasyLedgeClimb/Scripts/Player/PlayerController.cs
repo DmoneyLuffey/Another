@@ -798,7 +798,7 @@ public class PlayerController : MonoBehaviour
         //Mag Glove (Pedro)
         if (Input.GetKeyDown(KeyCode.E) && Physics.Raycast(transform.position, fwd, 2) && GameObject.FindWithTag("Iron"))
         {
-            print("Hello");
+            //print("Hello");
         }
 
 

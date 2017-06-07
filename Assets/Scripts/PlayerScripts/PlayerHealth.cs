@@ -5,7 +5,7 @@ using System.Collections;
 public class PlayerHealth : MonoBehaviour
 {
     Rect rect;
-
+    public Animator animator;
     public Transform player;
     public GameObject death;
     public Transform repsawnPoint;
@@ -28,10 +28,12 @@ public class PlayerHealth : MonoBehaviour
     public bool isAttacked = false;
     public bool isHealing = false;
     public bool isHit = false;
+    public bool isRunning = false;
 
     // Use this for initialization
     void Start ()
     {
+        animator = this.gameObject.GetComponent<Animator>();
         player = this.gameObject.GetComponent<Transform>();
         currentHealth = health;
         respawnLocation = repsawnPoint.transform.position;
@@ -43,6 +45,8 @@ public class PlayerHealth : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        Heal(0);
+        Walking();
         Damage(0);
         Death();
         if(player.position.y < -53.0)
@@ -112,18 +116,13 @@ public class PlayerHealth : MonoBehaviour
     {
         if (isHealing)
         {
-            currentHealth += amount;
-            isAttacked = true;
-        }
-
-        if (isHealing)
-        {
             healthStart += Time.deltaTime;
             if (healthStart < healthCoolDown + Time.deltaTime)
             {
-                if (healthStart >= healthCoolDown && !isHealing)
+                if (healthStart >= healthCoolDown && isHealing)
                 {
                     healthStart = 0;
+                    isHealing = false;
                     isAttacked = false;
                 }
             }
@@ -143,6 +142,78 @@ public class PlayerHealth : MonoBehaviour
                     SceneManager.LoadScene(levelToLoad);
                 }
             }
+        }
+    }
+    public void Walking()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            isRunning = true;
+            {
+                if (isRunning)
+                {
+                    animator.Play("Run");
+                }
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && Input.GetKey(KeyCode.W))
+            {
+                isRunning = false;
+            }
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            isRunning = true;
+            {
+                if (isRunning)
+                {
+                    animator.Play("Run");
+                }
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && Input.GetKey(KeyCode.A))
+            {
+                isRunning = false;
+            }
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            isRunning = true;
+            {
+                if (isRunning)
+                {
+                    animator.Play("Run");
+                }
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && Input.GetKey(KeyCode.S))
+            {
+                isRunning = false;
+            }
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            isRunning = true;
+            {
+                if (isRunning)
+                {
+                    animator.Play("Run");
+                }
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && Input.GetKey(KeyCode.D))
+            {
+                isRunning = false;
+            }
+
         }
     }
 }

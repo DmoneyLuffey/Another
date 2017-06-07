@@ -4,6 +4,7 @@ using System.Collections;
 
 public class Collect : MonoBehaviour
 {
+    public PlayerHealth playerHealth;
     public GameObject player;
     public Transform target;
     public ResourseUI playerUI;
@@ -19,11 +20,12 @@ public class Collect : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        playerHealth = GameObject.FindGameObjectWithTag("Sergei").GetComponent<PlayerHealth>();
         moveSpeed = Random.Range(minSpeed, maxSpeed);
-        playerUI = GameObject.FindGameObjectWithTag("Player").GetComponent<ResourseUI>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        target = GameObject.FindWithTag("Player").transform;
-        thisTransform = transform;
+        playerUI = GameObject.FindGameObjectWithTag("Sergei").GetComponent<ResourseUI>();
+        player = GameObject.FindGameObjectWithTag("Sergei");
+        target = GameObject.FindWithTag("Sergei").transform;
+        thisTransform = this.gameObject.transform;
     }
 	
 	// Update is called once per frame
@@ -37,13 +39,29 @@ public class Collect : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.tag == "Sergei")
         {
             playerUI.pickedUp = true;
             playerUI.vials = playerUI.vials + vialAmount;
             playerUI.vialsText.text = "Vials: " + playerUI.vials.ToString();
             
             Destroy(this.gameObject);
+        }
+        if(other.gameObject.tag == "Sergei")
+        {
+            if(this.gameObject.tag == "Health")
+            {
+
+                playerHealth.isHealing = true;
+                playerHealth.currentHealth = 10;
+            }
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if(gameObject.tag == "Sergei")
+        {
+            playerHealth.isHealing = false;
         }
     }
 }
